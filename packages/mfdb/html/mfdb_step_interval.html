@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: MareFrame DB intervals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for mfdb_step_interval {mfdb}"><tr><td>mfdb_step_interval {mfdb}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>MareFrame DB intervals</h2>
+
+<h3>Description</h3>
+
+<p>Represent a uniform or non-uniform interval.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mfdb_step_interval(prefix, by, from = 0, to = NULL, open_ended = FALSE)
+## S3 method for class 'mfdb_step_interval'
+as.list(x, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>prefix</code></td>
+<td>
+
+<p>(required) A character prefix to prepend to minimum to create list names
+</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+
+<p>(required) Increment of the sequence.
+</p>
+</td></tr>
+<tr valign="top"><td><code>from, to</code></td>
+<td>
+
+<p>Start / end of the sequence. Defaults to 0 / infinity respectively.
+</p>
+</td></tr>
+<tr valign="top"><td><code>open_ended</code></td>
+<td>
+
+<p>If true, there should be a final group representing everything above &quot;to&quot;.
+</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>An <code>mfdb_step_interval</code> object.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Nothing should be specfied (required by generic signature).
+</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Make groups of len0 (0--5), len5 (5--10), ... len45(45--50)
+g1 &lt;- mfdb_step_interval("len", 5, to = 50)
+</pre>
+
+<hr><div align="center">[Package <em>mfdb</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

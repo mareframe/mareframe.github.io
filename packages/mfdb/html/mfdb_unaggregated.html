@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: MareFrame DB unaggregated data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for mfdb_unaggregated {mfdb}"><tr><td>mfdb_unaggregated {mfdb}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>MareFrame DB unaggregated data</h2>
+
+<h3>Description</h3>
+
+<p>Tell mfdb functions not to aggregate this column, just return all values.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mfdb_unaggregated(omitNA = FALSE)
+## S3 method for class 'mfdb_unaggregated'
+as.list(x, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>omitNA</code></td>
+<td>
+<p>Skip over rows where column is NA</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>The <code>mfdb_unaggregated</code> to convert to a list for use in <code>gadget_file</code>
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Ignored.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Currently we can't work out what to fill a group with,
+## so returns placeholders
+as.list(mfdb_unaggregated())
+## Not run: 
+$X
+[1] "X"
+
+## End(Not run)</pre>
+
+<hr><div align="center">[Package <em>mfdb</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

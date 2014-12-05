@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: MareFrame DB class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for mfdb {mfdb}"><tr><td>mfdb {mfdb}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>MareFrame DB class</h2>
+
+<h3>Description</h3>
+
+<p>Create a class representing a connection to a MareFrame DB
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+    mfdb(case_study_name,
+         db_params = list(),
+         destroy_schema = FALSE,
+         save_temp_tables = FALSE)
+
+    mfdb_disconnect(mdb)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>case_study_name</code></td>
+<td>
+
+<p>The name of the case study you are working with, should be a valid
+name from <code>mfdb::case_study</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>db_params</code></td>
+<td>
+
+<p>Extra parameters to supply to a <code>DBI</code> connection object. By
+default it will search for a PostgreSQL &quot;mf&quot; database locally.
+</p>
+</td></tr>
+<tr valign="top"><td><code>destroy_schema</code></td>
+<td>
+
+<p>Optional boolean. If true, all mfdb tables will be dropped, allowing
+you to recreate your schema. Returns NULL, you need to call <code>mfdb</code>
+to connect and rebuild schema.
+</p>
+</td></tr>
+<tr valign="top"><td><code>save_temp_tables</code></td>
+<td>
+
+<p>Optional boolean. If true, any temporary tables will be made permanent
+for later inspection.
+</p>
+</td></tr>
+<tr valign="top"><td><code>mdb</code></td>
+<td>
+
+<p>Database connection created by <code>mfdb()</code>.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>## Not run: 
+    # Connect to local DB, as the Iceland case study
+    mdb &lt;- mfdb('Iceland')
+
+    # Connect to "mf2014" on remote DB server
+    mdb &lt;- mfdb('Iceland', db_params = list(host = "db.mareframe-fp7.org", dbname = "mf2014")
+
+    # Stop it and tidy up
+    mfdb_disconnect(mdb)
+
+    # Destroy everything, since schema was out of date.
+    mfdb('', destroy_schema = TRUE)
+
+## End(Not run)</pre>
+
+<hr><div align="center">[Package <em>mfdb</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

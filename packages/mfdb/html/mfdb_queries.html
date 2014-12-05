@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: MareFrame DB queries</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for mfdb_queries {mfdb}"><tr><td>mfdb_queries {mfdb}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>MareFrame DB queries</h2>
+
+<h3>Description</h3>
+
+<p>Aggregate data from the database in a variety of ways
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mfdb_area_size(mdb, params)
+mfdb_temperature(mdb, params)
+mfdb_sample_count(mdb, cols, params)
+mfdb_sample_meanlength(mdb, cols, params)
+mfdb_sample_meanlength_stddev(mdb, cols, params)
+mfdb_sample_meanweight(mdb, cols, params)
+mfdb_sample_meanweight_stddev(mdb, cols, params)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>mdb</code></td>
+<td>
+<p>An object created by <code>mfdb</code>()</p>
+</td></tr>
+<tr valign="top"><td><code>cols</code></td>
+<td>
+<p>Any additonal columns to group by, see details.</p>
+</td></tr>
+<tr valign="top"><td><code>params</code></td>
+<td>
+<p>A list of parameters, see details.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The items in the <code>params</code> list either restrict data that is returned, or
+groups data if they are also in the <code>cols</code> vector, or are 'year',
+'timestep', or 'area'.
+</p>
+<p>If you are grouping by the column, <code>params</code> should contain one of the
+following:
+</p>
+
+<dl>
+<dt>NULL</dt><dd>
+<p>Don't do any grouping, instead put 'any' in the resulting column.
+For example, <code>age = NULL</code> results in &quot;any&quot;.
+</p>
+</dd>
+<dt>character / numeric vector</dt><dd>
+<p>Aggregate all samples together where they match.
+For example, <code>year = 1990:2000</code> results in 1990, ... , 2000.
+</p>
+</dd>
+<dt>mfdb_unaggregated()</dt><dd>
+<p>Don't do any aggregation for this column, return all possible values.
+</p>
+</dd>
+<dt>mfdb_group()</dt><dd>
+<p>Group several discrete items together.
+For example, <code>age = mfdb_group(young = 1:3, old = 4:5)</code>
+results in &quot;young&quot; and &quot;old&quot;.
+</p>
+</dd>
+<dt>mfdb_interval()</dt><dd>
+<p>Group irregular ranges together.
+For example, <code>length = mfdb_interval('len', c(0, 10, 100, 1000))</code>
+results in &quot;len0&quot;, &quot;len10&quot;, &quot;len100&quot;, and &quot;len1000&quot;.
+</p>
+</dd>
+<dt>mfdb_step_interval()</dt><dd>
+<p>Group regular ranges together.
+For example, <code>length = mfdb_step_interval('len', to = 100, by = 10)</code>
+results in &quot;len0&quot;, &quot;len10&quot;, ... , &quot;len100&quot;.
+</p>
+</dd>
+</dl>
+
+<p>In addition, <code>params</code> can contain other arguments to purely restrict the
+data that is returned.
+</p>
+
+<dl>
+<dt>institute</dt><dd><p>A vector of institute names, see mfdb::institute for possible values</p>
+</dd>
+<dt>gear</dt><dd><p>A vector of gear names, see mfdb::gear for possible values</p>
+</dd>
+<dt>vessel</dt><dd><p>A vector of vessel names, see mfdb::vessel for possible values</p>
+</dd>
+<dt>sampling_type</dt><dd><p>A vector of sampling_type names, see mfdb::sampling_type for possible values</p>
+</dd>
+<dt>species</dt><dd><p>A vector of species names, see mfdb::species for possible values</p>
+</dd>
+<dt>sex</dt><dd><p>A vector of sex names, see mfdb::sex for possible values</p>
+</dd>
+</dl>
+
+<p>To save specifying the same items repeatedly, you can use list
+concatenation to keep some defaults, for example:
+</p>
+<PRE>
+defaults &lt;- list(year = 1998:2000)
+mfdb_sample_meanlength(mdb, c('age'), c(list(), defaults))
+</PRE>
+
+
+<h3>Value</h3>
+
+<p>All will return a list of data.frame objects. Precisely what columns
+these will contain depends on the function called.
+</p>
+
+<dl>
+<dt>mfdb_temperature</dt><dd>
+<p>Returns year, step, area, (mean) temperature
+</p>
+</dd>
+<dt>mfdb_sample_count</dt><dd>
+<p>Returns year,step,area,(group cols),number (of samples)
+</p>
+</dd>
+<dt>mfdb_sample_meanlength</dt><dd>
+<p>Returns year,step,area,(group cols),number (of samples),mean (length in group)
+</p>
+</dd>
+<dt>mfdb_sample_meanlength_stddev</dt><dd>
+<p>As mfdb_sample_meanlength, but also returns std. deviation.
+</p>
+</dd>
+<dt>mfdb_sample_meanweight</dt><dd>
+<p>Returns year,step,area,(group cols),number (of samples),mean (weight of group)
+</p>
+</dd>
+<dt>mfdb_sample_meanweight_stddev</dt><dd>
+<p>As mfdb_sample_meanweight, but also returns std. deviation.
+</p>
+</dd>
+</dl>
+
+
+
+<h3>Examples</h3>
+
+<pre>## Not run: 
+agg_data &lt;- mfdb_sample_count(mdb, c('age', 'length'),
+        params = c(list(
+            year = c(1990, 1991),
+            length = mfdb_interval("len", seq(0, 500, by = 30)),
+            age = mfdb_group('young' = c(1,2,3)),
+            null = NULL), opt_catch))
+gadget_dir_write(gd, gadget_likelihood_component("catchdistribution",
+        name = "cdist",
+        weight = 0.9,
+        data = agg_data[[1]],
+        area = attr(agg_data[[1]], "area"),
+        age = attr(agg_data[[1]], "age")))
+
+## End(Not run)</pre>
+
+<hr><div align="center">[Package <em>mfdb</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

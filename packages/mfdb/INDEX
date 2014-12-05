@@ -1,0 +1,14 @@
+gadget_areafile         Gadget area files
+gadget_directory        Gadget directory objects
+gadget_file             Gadget file objects
+gadget_likelihood_component
+                        Gadget likelihood components
+mfdb                    MareFrame DB class
+mfdb-data               MareFrame DB Datasets
+mfdb-package            MareFrame DB querying library
+mfdb_area_size          MareFrame DB queries
+mfdb_group              MareFrame DB groups
+mfdb_import_survey      MareFrame Import functions
+mfdb_interval           MareFrame DB intervals
+mfdb_step_interval      MareFrame DB intervals
+mfdb_unaggregated       MareFrame DB unaggregated data

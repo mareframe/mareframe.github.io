@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: MareFrame DB Datasets</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for mfdb-data {mfdb}"><tr><td>mfdb-data {mfdb}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>MareFrame DB Datasets</h2>
+
+<h3>Description</h3>
+
+<p>Data sets representing the content of taxonomies used in the database.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+gear
+case_study
+institute
+maturity_stage
+sex
+species
+vessel
+</pre>
+
+
+<h3>Details</h3>
+
+<p>All of these tables represent acceptible values for use when importing
+data. You can see the content of an individual taxonomy at the R command
+line, e.g. <KBD>mfdb::gear</KBD>
+</p>
+<p>Each of the datasets will have the following columns.
+</p>
+
+<dl>
+<dt>id</dt><dd><p>A numeric ID to be used internally</p>
+</dd>
+<dt>name</dt><dd>
+<p>An alphanumeric ID to be used when importing and reporting data.
+Can contain multiple sections separated by dots to represent a tree,
+for example: &quot;FARMYARD.COWS.DAISY&quot;.
+</p>
+</dd>
+<dt>description</dt><dd>
+<p>Some text describing the option.
+</p>
+</dd>
+</dl>
+
+<p>The taxonomies are used in the following locations:
+</p>
+
+<dl>
+<dt>case_study</dt><dd>
+<p>Possible case studies, use when connecting with <a href="mfdb.html">mfdb</a>()
+</p>
+</dd>
+<dt>gear, institute, vessel</dt><dd>
+<p>Used to describe the dataset being imported with <a href="mfdb_import.html">mfdb_import_survey</a>()
+</p>
+</dd>
+<dt>sex, maturity_stage, species</dt><dd>
+<p>Used for individual sample points when using <a href="mfdb_import.html">mfdb_import_survey</a>()
+</p>
+</dd>
+</dl>
+
+
+<hr><div align="center">[Package <em>mfdb</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

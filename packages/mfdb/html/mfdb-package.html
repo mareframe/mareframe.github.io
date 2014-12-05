@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: MareFrame DB querying library</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for mfdb-package {mfdb}"><tr><td>mfdb-package {mfdb}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>
+MareFrame DB querying library
+</h2>
+
+<h3>Description</h3>
+
+<p>Tools to query a MareFrame DB and reformat results in forms
+useful for GADGET and EwE models.
+</p>
+
+
+<h3>Details</h3>
+
+
+<table summary="Rd table">
+<tr>
+ <td align="left">
+Package: </td><td align="left"> mfdb</td>
+</tr>
+<tr>
+ <td align="left">
+Type: </td><td align="left"> Package</td>
+</tr>
+<tr>
+ <td align="left">
+Version: </td><td align="left"> 1.0</td>
+</tr>
+<tr>
+ <td align="left">
+Date: </td><td align="left"> 2014-04-23</td>
+</tr>
+<tr>
+ <td align="left">
+License: </td><td align="left"> GPL-3</td>
+</tr>
+<tr>
+ <td align="left">
+Depends: </td><td align="left"> R (&gt;= 3.1.1)</td>
+</tr>
+<tr>
+ <td align="left">
+Imports: </td><td align="left"> 
+logging (&gt;= 0.7-103),
+DBI (&gt;= 0.3.1),
+RPostgreSQL (&gt;= 0.4)</td>
+</tr>
+<tr>
+ <td align="left">
+Suggests: </td><td align="left"> unittest</td>
+</tr>
+<tr>
+ <td align="left">
+LazyData: </td><td align="left"> true</td>
+</tr>
+<tr>
+ <td align="left">
+Built: </td><td align="left"> R 3.1.1; ; 2014-12-04 13:31:31 UTC; unix</td>
+</tr>
+<tr>
+ <td align="left">
+</td>
+</tr>
+
+</table>
+
+<p>Index:
+</p>
+<PRE>
+gadget_areafile         Gadget area files
+gadget_directory        Gadget directory objects
+gadget_file             Gadget file objects
+gadget_likelihood_component
+                        Gadget likelihood components
+mfdb                    MareFrame DB class
+mfdb-data               MareFrame DB Datasets
+mfdb-package            MareFrame DB querying library
+mfdb_area_size          MareFrame DB queries
+mfdb_group              MareFrame DB groups
+mfdb_import_survey      MareFrame Import functions
+mfdb_interval           MareFrame DB intervals
+mfdb_step_interval      MareFrame DB intervals
+mfdb_unaggregated       MareFrame DB unaggregated data
+</PRE>
+
+
+<h3>Introduction &amp; Schema description</h3>
+
+<p>Before doing anything with <span class="pkg">mfdb</span>, it is worth knowing a bit about how data
+is stored. Broadly, there are 2 basic types of table in <span class="pkg">mfdb</span>,
+<EM>taxonomy</EM> and <EM>measurement</EM> tables.
+</p>
+<p>The measurement tables store all forms of sample data supported, at the finest
+available detail. These are then aggregated when using any of the mfdb query
+functions. All measurement data is separated by case study, so multiple case
+studies can be loaded into a database without conflicts.
+</p>
+<p>Taxonomy tables store all possible values for terms and their meaning, to
+ensure consistency in the data. A particularly important table is
+<span class="samp">case_study</span>, which lists the possible case studies that the database can
+store. When connecting to mfdb, you need to specify which case study you will
+be working with, so you access the correct data.
+</p>
+<p>Most Taxonomies are the same across any installation, and their definitions are
+stored as data attached to this package. See <a href="mfdb-data.html">mfdb-data</a> for more
+information on these. Others, such as <span class="samp">areacell</span> and <span class="samp">sampling_type</span> are
+case study specific, and you will need to define your terms before you can
+import data.
+</p>
+
+
+<h3>Importing data</h3>
+
+<p>Unless you are working with a remote database, you will need to populate the
+database at least once before you are able to do any querying. The steps your
+script needs to do are:
+</p>
+
+
+<h4>Connect to database</h4>
+
+<p>Use the <a href="mfdb.html">mfdb</a>() function. This will create tables / populate taxonomies if necessary.
+</p>
+
+
+
+<h4>Define areas &amp; divisions</h4>
+
+<p><span class="pkg">mfdb</span> models space in the following way:
+</p>
+
+<dl>
+<dt>areacell</dt><dd>
+<p>The finest level of detail stored in the database. Every measurement (e.g.
+temperature, length sample) is assigned to an areacell. This will generally
+correspond to ICES gridcells, however there is no requirement to do so. You
+might augment gridcell information with depth, or include divisions when the
+measurement doesn't correlate to a specific areacell.
+</p>
+</dd>
+<dt>division</dt><dd>
+<p>Collections of areacells, e.g. ICES subdivisions, or whatever is appropriate.
+</p>
+</dd>
+</dl>
+
+<p>Finally, when querying, divisions are grouped together into named collections,
+for instance <code>mfdb_group(north = 1:3, south = 4:6)</code> will put anything in
+divisions 1&ndash;3 under an area named &quot;north&quot;, 4&ndash;5 under an area named &quot;south&quot;.
+</p>
+<p>areacells and divisions are defined using <a href="mfdb_import.html">mfdb_import_area</a>() and
+<a href="mfdb_import.html">mfdb_import_division</a>() respectively. Before you can upload any measurements,
+you have to define the areacells that they will use.
+</p>
+
+
+
+<h4>Define sampling types</h4>
+
+<p>Any survey data can have a sampling type defined, which then can be used when
+querying data. If you want to use a sampling type, then define it using
+<a href="mfdb_import.html">mfdb_import_sampling_type</a>().
+</p>
+
+
+
+<h4>Import temperature data</h4>
+
+<p>At this point, you can start uploading actual measurements. The easiest of
+which is temperature. Upload a table of areacell/month/temperature data
+using <a href="mfdb_import.html">mfdb_import_temperature</a>()
+</p>
+
+
+
+<h4>Import survey data</h4>
+
+<p>Finally, import any survey data using <a href="mfdb_import.html">mfdb_import_survey</a>(). Ideally
+upload your data in separate chunks. For example, if you have length and
+age-length data, don't combine them in R, upload them separately and both
+will be used when querying for length data. This keeps the process simple,
+and allows you to swap out data as necessary
+</p>
+
+<p>See <a href="mfdb_import.html">mfdb_import_survey</a> for more information or 
+<a href="../demo">the demo directory</a> for concrete examples.
+</p>
+
+
+<h3>Querying data</h3>
+
+<p>There are a selection of querying functions available, all of which work
+same way. You give a set of parameters, each of which can be a vector of
+data you wish returned, for instance <code>year = 1998:2000</code> or
+<code>species = c('COD')</code>.
+</p>
+<p>If also grouping by this column (i.e. 'year', 'timestep', 'area' and any
+other columns given, e.g. 'age'), then the parameter will control how this
+grouping works, e.g. <code>maturity_stage = mfdb_group(imm = 1, mat = 2:5)</code>
+will result in the maturity_stage column having either 'imm' or 'mat'.
+These will also be used to generate GADGET aggregation files later.
+</p>
+<p>For example, the following queries the temperature table:
+</p>
+<PRE>
+defaults &lt;- list(
+    area = mfdb_group("101" = ),
+    timestep = mfdb_timestep_quarterly, # Group months to create 2 timesteps for each year
+    year = 1996:2005)
+agg_data &lt;- mfdb_temperature(mdb, defaults)
+</PRE>
+All functions will result in a list of data.frame result tables (generally
+only one, unless you requested bootstrapping). Each are suitable for
+feeding into a gadget function to output into model files.
+See <a href="mfdb_queries.html">mfdb_sample_count</a> for more information or 
+<a href="../demo">the demo directory</a> for concrete examples.
+
+
+<h3>Creating GADGET files</h3>
+
+<p>Finally, there are a set of functions that turn the output of queries into
+GADGET model files. These work on a <a href="gadget_directory.html">gadget_directory</a> object, which
+can either be an existing GADGET model to alter, or an empty / nonexistant
+directory.
+</p>
+<p>Generally, the result of an mfdb query will be enough to create a
+corresponding GADGET file, for instance, the following will create a GADGET
+area file in your gadget directory:
+</p>
+<PRE>
+gadget_dir_write(gd,gadget_areafile(
+    size = mfdb_area_size(mdb, defaults)[[1]],
+    temperature = mfdb_temperature(mdb, defaults)[[1]]))
+</PRE>
+See <a href="gadget_areafile.html">gadget_areafile</a> or <a href="gadget_likelihood_component.html">gadget_likelihood_component</a> for more
+information or <a href="../demo">the demo directory</a> for concrete examples.
+
+
+<h3>Author(s)</h3>
+
+<p>Jamie Lentin
+</p>
+<p>Maintainer: Jamie Lentin &lt;jamie.lentin@shuttlethread.com&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../gadgetr/html/gadgetr%2dpackage.html">gadgetr</a></code>
+</p>
+
+<hr><div align="center">[Package <em>mfdb</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>
