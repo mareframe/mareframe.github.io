@@ -79,13 +79,13 @@ results in &quot;young&quot; and &quot;old&quot;.
 <dt>mfdb_interval()</dt><dd>
 <p>Group irregular ranges together.
 For example, <code>length = mfdb_interval('len', c(0, 10, 100, 1000))</code>
-results in &quot;len0&quot;, &quot;len10&quot;, &quot;len100&quot;, and &quot;len1000&quot;.
+results in &quot;len0&quot;, &quot;len10&quot;, &quot;len100&quot; (1000 is the upper bound to len100).
 </p>
 </dd>
 <dt>mfdb_step_interval()</dt><dd>
 <p>Group regular ranges together.
 For example, <code>length = mfdb_step_interval('len', to = 100, by = 10)</code>
-results in &quot;len0&quot;, &quot;len10&quot;, ... , &quot;len100&quot;.
+results in &quot;len0&quot;, &quot;len10&quot;, ... , &quot;len90&quot;.
 </p>
 </dd>
 </dl>
