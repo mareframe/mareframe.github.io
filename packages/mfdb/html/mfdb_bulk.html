@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame DB Dump / Restore</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mfdb_bulk {mfdb}"><tr><td>mfdb_bulk {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>MareFrame DB Dump / Restore</h2>
+
+<h3>Description</h3>
+
+<p>Dump / Restore entire case studies.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mfdb_cs_dump(mdb, out_location)
+mfdb_cs_restore(mdb, in_location)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>mdb</code></td>
+<td>
+
+<p>(required) A database connection created by <code>mfdb</code>()
+</p>
+</td></tr>
+<tr valign="top"><td><code>in_location, out_location</code></td>
+<td>
+
+<p>(required) A filesystem directory or '.tar.gz' file to dump / restore database contents.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>mfdb_cs_dump</code> copies all data from the database/case-study that <code>mdb</code>
+is connected to, and writes it out to files in <code>out_location</code>. If this
+ends with 'tar.gz', then all files will be put into a tarball with the name
+</p>
+<p><code>mfdb_cs_restore</code> will remove any case-study data, and replaces it with the
+content of <code>in_location</code>, a directory or tarball.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>## Not run: 
+# Copy case study data from one case study to another
+mdb_out &lt;- mfdb('Iceland')
+mdb_in &lt;- mfdb('Test')
+
+mfdb_cs_dump(mdb_out, '/tmp/cs_dump')
+mfdb_cs_restore(mdb_in, '/tmp/cs_dump')
+
+mfdb_cs_dump(mdb_out, '/tmp/cs_dump.tar.gz')
+mfdb_cs_restore(mdb_in, '/tmp/cs_dump.tar.gz')
+
+## End(Not run)</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 3.1-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

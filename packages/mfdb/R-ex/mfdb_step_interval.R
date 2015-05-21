@@ -1,6 +1,6 @@
 ### Name: mfdb_step_interval
 ### Title: MareFrame DB intervals
-### Aliases: mfdb_step_interval as.list.mfdb_step_interval
+### Aliases: mfdb_step_interval
 
 ### ** Examples
 

@@ -1,8 +1,9 @@
 ### Name: mfdb_queries
 ### Title: MareFrame DB queries
-### Aliases: mfdb_area_size mfdb_temperature mfdb_sample_count
-###   mfdb_sample_meanlength_stddev mfdb_sample_meanlength
-###   mfdb_sample_meanweight mfdb_sample_meanweight_stddev
+### Aliases: mfdb_area_size mfdb_temperature mfdb_survey_index_mean
+###   mfdb_sample_count mfdb_sample_meanlength_stddev
+###   mfdb_sample_meanlength mfdb_sample_totalweight mfdb_sample_meanweight
+###   mfdb_sample_meanweight_stddev mfdb_stomach_presenceratio
 
 ### ** Examples
 ## Not run: 

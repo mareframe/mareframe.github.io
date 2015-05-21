@@ -5,14 +5,22 @@ source('utils/helpers.R')
 all_components <- c(
         "penalty",
         "understocking",
-        "catchstatistics",
         "catchdistribution",
-        "stockdistribution")
+        "catchstatistics",
+        "stockdistribution",
+        "stomachcontent",
+        "migrationpenalty",
+        "catchinkilos",
+        NULL)
 
 ok_group("Can generate gadget_likelihood_component objects", {
     expect_error(
         gadget_likelihood_component("aardvark"),
-        "Unknown likelihood component aardvark")
+        "aardvark")
+
+    expect_error(
+        gadget_likelihood_component("e12 ; bobby tables"),
+        "e12 ; bobby tables")
 
     expect_equal(
         class(gadget_likelihood_component("penalty")),
@@ -26,38 +34,85 @@ ok_group("Can use as.character on gadget_likelihood_components", {
     expect_equal(comp$type, "penalty")
 })
 
-ok_group("Name, type and weight behave the same with all components", {
-    for (type in all_components) {
-        if (type == "catchstatistics") {
-            c <- gadget_likelihood_component(type,
-                data = data.frame(), data_function = "customfunction")
-        } else {
-            c <- gadget_likelihood_component(type)
-        }
+ok_group("Can nest data.frame in a list", {
+    df <- data.frame(year = 1, step = 1, area = 1, fleet = 1, total_weight = 1)
+
+    comp <- gadget_likelihood_component("catchinkilos", data = df)
+    ok(cmp(comp$datafile$data, df), "Data included with regular data.frame")
+
+    comp <- gadget_likelihood_component("catchinkilos", data = list(df))
+    ok(cmp(comp$datafile$data, df), "Data included with nested data.frame")
+
+    ok(cmp_error(
+        gadget_likelihood_component("catchinkilos", data = list(df, df)),
+        "list"), "More than one item causes an error")
+})
+
+for (type in all_components) {
+    if (type == "catchstatistics") {
+        default_opts <- list(type,
+            data = data.frame(), data_function = "customfunction")
+    } else if (type == "catchdistribution") {
+        default_opts <- list(type,
+            data = data.frame(year = 1, step = 1, area = 1, age = 1, length = 1, number = 1))
+    } else if (type == "stockdistribution") {
+        default_opts <- list(type,
+            data = data.frame(year = 1, step = 1, area = 1, aardvark = 1, length = 1, number = 1))
+    } else if (type == "stomachcontent") {
+        default_opts <- list(type,
+            data = data.frame(year = 1, step = 1, area = 1, predator = 1, prey = 1, ratio = 1),
+            prey_length = list(a = c(1,4)))
+    } else if (type == "catchinkilos") {
+        default_opts <- list(type,
+            data = data.frame(year = 1, step = 1, area = 1, fleet = 1, total_weight = 1))
+    } else {
+        default_opts <- list(type)
+    }
+
+    ok_group(paste("Name, type and weight for component", type), {
+        comp <- do.call(gadget_likelihood_component, default_opts)
 
         # Class should match type
-        expect_equal(class(c), c(
+        ok(cmp(class(comp), c(
             paste0("gadget_", type, "_component"),
-            "gadget_likelihood_component"))
+            "gadget_likelihood_component")), "Has correct class")
 
         # Type and name should match the name we gave
-        expect_equal(c$type, type)
-        expect_equal(c$name, type)
-        # Weight defaults to 0
-        expect_equal(c$weight, 0)
+        ok(cmp(comp$type, type), "Type set")
+        ok(cmp(comp$name, type), "Default name same as type")
+        ok(cmp(comp$weight, 0), "Weight defaults to 0")
 
         # Can customise name & weight
-        if (type == "catchstatistics") {
-            c <- gadget_likelihood_component(type,
-                name = "gerald", weight = 0.542,
-                data = data.frame(), data_function = "customfunction")
-        } else {
-            c <- gadget_likelihood_component(type, name = "gerald", weight = 0.542)
+        comp <- do.call(gadget_likelihood_component, c(
+            default_opts,
+            list(name = "gerald", weight = 0.542),
+            NULL))
+        ok(cmp(comp$name, "gerald"), "Can set name")
+        ok(cmp(comp$weight, 0.542), "Can set weight")
+    })
+
+    ok_group(paste("Filenames for component", type), {
+        contains <- function(pattern, x) {
+            if(length(grep(pattern, x, value = FALSE)) > 0) {
+                TRUE
+            } else {
+                 paste0(x, " does not contain ", pattern)
+            }
         }
-        expect_equal(c$name, "gerald")
-        expect_equal(c$weight, 0.542)
-    }
-})
+
+        comp <- do.call(gadget_likelihood_component, c(
+            default_opts,
+            list(name = "gerald", weight = 0.542),
+            NULL))
+        for (key in names(comp)) {
+            if ("gadget_file" %in% class(comp[[key]]) && comp$type != "penalty") {
+                ok(contains(
+                    paste0("^Data/", comp$type, "\\.", comp$name, "\\."),
+                    comp$datafile$filename), "Filename starts with name and type")
+            }
+        }
+    })
+}
 
 ok_group("Can write likelihood components", {
     # Create a temporary directory, starts off empty
@@ -128,6 +183,28 @@ ok_group("Can write likelihood components", {
         "[fleet]",
         "[likelihood]",
         "likelihoodfiles\tlikelihood"))
+
+    # Add one to a new likelihood file
+    gadget_dir_write(gd, gadget_likelihood_component("understocking", likelihoodfile="dahood", name="bad-to-the-bone", weight = 0.8))
+    ok(cmp_file(gd, "main",
+        ver_string,
+        "timefile\t",
+        "areafile\t",
+        "printfiles\t; Required comment",
+        "[stock]",
+        "[tagging]",
+        "[otherfood]",
+        "[fleet]",
+        "[likelihood]",
+        "likelihoodfiles\tlikelihood\tdahood"))
+    ok(cmp_file(gd, "dahood",
+        ver_string,
+        "; ",
+        "[component]",
+        "name\tbad-to-the-bone",
+        "weight\t0.8",
+        "type\tunderstocking",
+        NULL))
 })
 
 ###############################################################################
@@ -162,25 +239,33 @@ ok_group("Function either provided explicitly or based on generator", {
             data = data.frame(), data_function = "customfunction")[['function']],
         "customfunction")
 
-    expect_equal(
-        gadget_likelihood_component("catchstatistics",
-            data = structure(data.frame(), generator = "mfdb_sample_meanlength_stddev"))[['function']],
-        "lengthgivenstddev")
+    ok(cmp(
+        gadget_likelihood_component("catchstatistics", data = structure(
+            data.frame(year = 1990, step = 1, area = 1, age = 1, number = 1, mean = 1, stddev = 1),
+            generator = "mfdb_sample_meanlength_stddev"))[['function']],
+        "lengthgivenstddev"), "Guessed function given generator")
+
+    ok(cmp_error(
+        gadget_likelihood_component("catchstatistics", data = structure(
+            data.frame(year = 1990, step = 1, area = 1, age = 1, number = 1, mean = 1),
+            generator = "mfdb_sample_meanlength_stddev")),
+        "stddev"), "Noticed missing column")
 })
 
 ###############################################################################
 ok_group("Aggregation files", {
     cmp_agg <- function (agg_type, agg, ...) {
         gd <- gadget_directory(tempfile())
+        agg_summ <- agg_summary(fake_mdb(), agg, 'c.col', 'col', data.frame(col = 1:5), 0)
         gadget_dir_write(gd, gadget_likelihood_component(
             "catchdistribution",
             name="cd",
             weight = 0.8,
             data = structure(
-                data.frame(a = c(1,2,3), b = c(4,5,6)),
-                area = if (agg_type == 'area') agg else NULL,
-                age = if (agg_type == 'age') agg else NULL,
-                length = if (agg_type == 'len') agg else NULL,
+                data.frame(year = 1, step = 1, area = 1, age = 1, length = 1, number = 1),
+                area = if (agg_type == 'area') agg_summ else NULL,
+                age = if (agg_type == 'age') agg_summ else NULL,
+                length = if (agg_type == 'len') agg_summ else NULL,
                 generator = "mfdb_sample_meanlength")
             ))
         do.call(cmp_file, c(
@@ -208,14 +293,13 @@ ok_group("Aggregation files", {
         "4\t4",
         NULL), "1:4 converted into 1 group for each")
 
-    ok(cmp_agg('age', NULL,
-        ver_string,
-        "all\tX",
-        NULL), "Make our best guess at an 'all' aggregation")
-
     ok(cmp_agg('age', mfdb_unaggregated(),
         ver_string,
-        "X\tX",
+        "1\t1",
+        "2\t2",
+        "3\t3",
+        "4\t4",
+        "5\t5",
         NULL), "mfdb_unaggregated")
 
     ok(cmp_agg('len', mfdb_interval("len", seq(0, 50, by = 10)),
@@ -237,4 +321,137 @@ ok_group("Aggregation files", {
         "len25\t25\t30",
         NULL), "mfdb_step_interval")
 
+})
+
+###############################################################################
+ok_group("surveyindices", {
+    cmp_component <- function (comp, ...) {
+        gd <- gadget_directory(tempfile())
+        gadget_dir_write(gd, comp)
+        cmp_file(gd, "likelihood", ...)
+    }
+
+    component <- gadget_likelihood_component('surveyindices', name = 'si', sitype = 'lengths', fittype = 'linearfit',
+        data = structure(
+            data.frame(year = 1998, step = 1:2, area = 101, length = c(100,200), number = c(2,4)),
+            area = list(all = 101),
+            length = list(len100 = c(100,500))))
+    ok(cmp(class(component)[[1]], 'gadget_surveyindices_component'), "Made lengths sitype")
+    ok(cmp_component(component,
+        ver_string,
+        "; ",
+        "[component]",
+        "name\tsi",
+        "weight\t0",
+        "type\tsurveyindices",
+        "datafile\tData/surveyindices.si.lengths",
+        "sitype\tlengths",
+        "biomass\t0",
+        "areaaggfile\tAggfiles/surveyindices.si.area.agg",
+        "lenaggfile\tAggfiles/surveyindices.si.len.agg",
+        "fittype\tlinearfit",
+        NULL), "Wrote component with lengths sitype")
+
+    component <- gadget_likelihood_component('surveyindices', name = 'si', sitype = 'ages', fittype = 'linearfit',
+        data = structure(
+            data.frame(year = 1998, step = 1:2, area = 101, age = c(100,200), number = c(2,4)),
+            area = list(all = 101),
+            age = list(age100 = c(100,500))))
+    ok(cmp(class(component)[[1]], 'gadget_surveyindices_component'), "Made ages sitype")
+    ok(cmp_component(component,
+        ver_string,
+        "; ",
+        "[component]",
+        "name\tsi",
+        "weight\t0",
+        "type\tsurveyindices",
+        "datafile\tData/surveyindices.si.ages",
+        "sitype\tages",
+        "biomass\t0",
+        "areaaggfile\tAggfiles/surveyindices.si.area.agg",
+        "ageaggfile\tAggfiles/surveyindices.si.age.agg",
+        "fittype\tlinearfit",
+        NULL), "Wrote component with ages sitype")
+
+    component <- gadget_likelihood_component('surveyindices', name = 'si', sitype = 'fleets', fittype = 'linearfit',
+        data = structure(
+            data.frame(year = 1998, step = 1:2, area = 101, length = c(100,200), number = c(2,4)),
+            area = list(all = 101),
+            length = list(len100 = c(100,500))),
+        fleetnames = c("cuthbert", "dibble"))
+    ok(cmp(class(component)[[1]], 'gadget_surveyindices_component'), "Made fleets sitype")
+    ok(cmp_component(component,
+        ver_string,
+        "; ",
+        "[component]",
+        "name\tsi",
+        "weight\t0",
+        "type\tsurveyindices",
+        "datafile\tData/surveyindices.si.fleets",
+        "sitype\tfleets",
+        "biomass\t0",
+        "areaaggfile\tAggfiles/surveyindices.si.area.agg",
+        "lenaggfile\tAggfiles/surveyindices.si.len.agg",
+        "fleetnames\tcuthbert\tdibble",
+        "fittype\tlinearfit",
+        NULL), "Wrote component with fleets sitype")
+
+    component <- gadget_likelihood_component('surveyindices', name = 'si', sitype = 'acoustic', fittype = 'linearfit',
+        data = structure(
+            data.frame(year = 1998, step = 1:2, area = 101, survey = c(100,200), acoustic = c(2,4)),
+            area = list(all = 101)),
+        surveynames = c("cuthbert", "dibble"))
+    ok(cmp(class(component)[[1]], 'gadget_surveyindices_component'), "Made acoustic sitype")
+    ok(cmp_component(component,
+        ver_string,
+        "; ",
+        "[component]",
+        "name\tsi",
+        "weight\t0",
+        "type\tsurveyindices",
+        "datafile\tData/surveyindices.si.acoustic",
+        "sitype\tacoustic",
+        "biomass\t0",
+        "areaaggfile\tAggfiles/surveyindices.si.area.agg",
+        "surveynames\tcuthbert\tdibble",
+        "fittype\tlinearfit",
+        NULL), "Wrote component with acoustic sitype")
+
+    component <- gadget_likelihood_component('surveyindices', name = 'si', sitype = 'effort', fittype = 'linearfit',
+        data = structure(
+            data.frame(year = 1998, step = 1:2, area = 101, fleet = c(100,200), effort = c(2,4)),
+            area = list(all = 101)),
+        fleetnames = c("cuthbert", "dibble"))
+    ok(cmp(class(component)[[1]], 'gadget_surveyindices_component'), "Made effort sitype")
+    ok(cmp_component(component,
+        ver_string,
+        "; ",
+        "[component]",
+        "name\tsi",
+        "weight\t0",
+        "type\tsurveyindices",
+        "datafile\tData/surveyindices.si.effort",
+        "sitype\teffort",
+        "biomass\t0",
+        "areaaggfile\tAggfiles/surveyindices.si.area.agg",
+        "fleetnames\tcuthbert\tdibble",
+        "fittype\tlinearfit",
+        NULL), "Wrote component with effort sitype")
+
+})
+
+###############################################################################
+ok_group("catchinkilos", {
+    # aggregationlevel = 0
+    comp <- gadget_likelihood_component(
+        'catchinkilos',
+        data = data.frame(year = 1, step = 1:3, area = 1, fleet = 1, total_weight = 11:13))
+    ok(cmp(names(comp$datafile$data), c("year", "step", "area", "fleet", "total_weight")), "Has step column")
+
+    # aggregationlevel = 1
+    comp <- gadget_likelihood_component(
+        'catchinkilos',
+        data = structure(data.frame(year = 1, step = 1, area = 1, fleet = 1, total_weight = 11:13),
+            step = mfdb_timestep_yearly))
+    ok(cmp(names(comp$datafile$data), c("year", "area", "fleet", "total_weight")), "step column removed")
 })

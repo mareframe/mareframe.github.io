@@ -12,7 +12,7 @@ ok_group("Can write area files", {
         year = rep(c(1998), each = 12),
         step = rep(c("q1", "q2", "q3", "q4"), each = 3),
         area = rep(c("divA", "divB", "divC"), times = 4),
-        temperature = 1:12,
+        mean = 1:12,
         stringsAsFactors = FALSE
     ), area = list(divA = 14, divX = 99, divB = 30, divC = 44, divD = 88)))
     ok(cmp_file(gd, 'main',
@@ -27,9 +27,9 @@ ok_group("Can write area files", {
         "; divA\tdivX\tdivB\tdivC\tdivD",
         "areas\t1\t2\t3\t4\t5",
         "size\t15\t0\t25\t10\t0",
-        "temperature\t",
+        "temperature",
         "; -- data --",
-        "; year\tstep\tarea\ttemperature",
+        "; year\tstep\tarea\tmean",
         "1998\tq1\t1\t1",
         "1998\tq1\t3\t2",
         "1998\tq1\t4\t3",

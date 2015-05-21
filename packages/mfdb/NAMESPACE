@@ -1,3 +1,7 @@
+# mfdb_bulk.R
+export(mfdb_cs_dump)
+export(mfdb_cs_restore)
+
 # mfdb_group.R
 export(mfdb_group)
 export(mfdb_timestep_yearly)
@@ -8,11 +12,9 @@ export(mfdb_bootstrap_group)
 
 # mfdb_interval.R
 export(mfdb_interval)
-S3method(as.list, mfdb_interval)
 
 # mfdb_step_interval.R
 export(mfdb_step_interval)
-S3method(as.list, mfdb_step_interval)
 
 # mfdb.R
 importFrom(DBI, dbConnect, dbDisconnect, dbDriver, dbSendQuery, dbFetch, dbGetQuery, dbCommit, dbRollback, dbGetRowsAffected, dbClearResult, dbWriteTable)
@@ -23,24 +25,29 @@ export(mfdb_disconnect)
 
 # mfdb_import.R
 export(mfdb_import_survey)
+export(mfdb_import_survey_index)
 export(mfdb_import_area)
 export(mfdb_import_division)
 export(mfdb_import_temperature)
 export(mfdb_import_sampling_type)
+export(mfdb_import_cs_taxonomy)
+export(mfdb_import_stomach)
 
 # mfdb_queries.R
 #alsoUses(logging, getLogger)
 export(mfdb_area_size)
 export(mfdb_temperature)
+export(mfdb_survey_index_mean)
 export(mfdb_sample_count)
 export(mfdb_sample_meanlength_stddev)
 export(mfdb_sample_meanlength)
+export(mfdb_sample_totalweight)
 export(mfdb_sample_meanweight)
 export(mfdb_sample_meanweight_stddev)
+export(mfdb_stomach_presenceratio)
 
 # mfdb_unaggregated.R
 export(mfdb_unaggregated)
-S3method(as.list, mfdb_unaggregated)
 
 # gadget_areafile.R
 export(gadget_areafile)
@@ -62,3 +69,10 @@ export(read.gadget_file)
 # gadget_likelihood_component.R
 export(gadget_likelihood_component)
 S3method(gadget_dir_write, gadget_likelihood_component)
+
+# gadeget_stockfile.R
+export(gadget_stockfile_extremes)
+export(gadget_stockfile_refweight)
+export(gadget_stockfile_initialconditions)
+export(gadget_stockfile_recruitment)
+S3method(gadget_dir_write, gadget_stockfile)

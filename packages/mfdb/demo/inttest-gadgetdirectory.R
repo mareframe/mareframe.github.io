@@ -12,11 +12,12 @@ source('mfdb/tests/utils/helpers.R')
 source('mfdb/tests/utils/inttest-helpers.R')
 
 # Empty database, so we start from scratch
-mfdb('', destroy_schema = TRUE)
+if (exists("mdb")) mfdb_disconnect(mdb)
+mfdb('', db_params = db_params, destroy_schema = TRUE)
 
 # Open a connection to the DB for the Iceland case study, and open an output
 # directory to save files in
-mdb <- mfdb('Test', db_params = db_params, save_temp_tables = TRUE)
+mdb <- mfdb('Test', db_params = db_params, save_temp_tables = FALSE)
 
 ok_group("Area File", {
     # 3 area cells 45G01--3, each of which are 5km^2
@@ -35,7 +36,7 @@ ok_group("Area File", {
         year = rep(c(1998, 1999), each = 12),
         month = c(1:12, 1:12),
         areacell = c(rep('45G01', times = 24)),
-        temperature = c(1:12, 25:36)))
+        temperature = c(0.5, 1.2, 2.4, 3.5, 4.6, 5.7, 6.1, 7.4, 8.9, 10, 11, 12, 25:36)))
 
     # Initalise a gadget directory to output into
     gd <- gadget_directory(tempfile())
@@ -56,18 +57,18 @@ ok_group("Area File", {
         "; a\tb",
         "areas\t1\t2",
         "size\t5\t10",
-        "temperature\t",
+        "temperature",
         "; -- data --",
-        "; year\tstep\tarea\ttemperature",
-        "1998\t1\t1\t2",
-        "1998\t2\t1\t5",
-        "1998\t3\t1\t8",
-        "1998\t4\t1\t11",
-        "1999\t1\t1\t26",
-        "1999\t2\t1\t29",
-        "1999\t3\t1\t32",
-        "1999\t4\t1\t35"
-        ), "Areafile on disk matches")
+        "; year\tstep\tarea\tmean",
+        paste0("1998\t1\t1\t", round(mean(c(0.5, 1.2, 2.4)), 1)),
+        paste0("1998\t2\t1\t", round(mean(c(3.5, 4.6, 5.7)), 1)),
+        paste0("1998\t3\t1\t", round(mean(c(6.1, 7.4, 8.9)), 1)),
+        paste0("1998\t4\t1\t", round(mean(c(10, 11, 12)), 1)),
+        paste0("1999\t1\t1\t", round(mean(25:27), 1)),
+        paste0("1999\t2\t1\t", round(mean(28:30), 1)),
+        paste0("1999\t3\t1\t", round(mean(31:33), 1)),
+        paste0("1999\t4\t1\t", round(mean(34:36), 1)),
+        NULL), "Areafile on disk matches")
 })
 
 ok_group("Length / weight / age samples", {
@@ -160,7 +161,7 @@ ok_group("Maturity stage samples", {
     gd <- gadget_directory(tempfile())
 
     # Treat the maturity stage as a stock, divide up into mature and immature
-    agg_data <- mfdb_sample_count(mdb, c('maturity_stage', 'age', 'length'), list(
+    agg_data <- mfdb_sample_count(mdb, c('maturity_stage', 'length'), list(
             year = 1998:2000,
             area = mfdb_group(divA = c("divA")),
             length = mfdb_step_interval('len', by = 10, to = 100),
@@ -194,25 +195,21 @@ ok_group("Maturity stage samples", {
     ok(cmp_file(gd, "Data/stockdistribution.stockdistribution.sumofsquares",
         ver_string,
         "; -- data --",
-        "; year\tstep\tarea\tstock\tage\tlength\tnumber",
-        "1998\t1\tdivA\timm\tall\tlen10\t200",
-        "1998\t1\tdivA\tmat\tall\tlen30\t650",
-        "1998\t1\tdivA\tmat\tall\tlen40\t460",
-        "1998\t1\tdivA\tmat\tall\tlen50\t500",
-        "1998\t2\tdivA\timm\tall\tlen30\t350",
-        "1998\t2\tdivA\timm\tall\tlen60\t650",
-        "1998\t2\tdivA\tmat\tall\tlen20\t220",
-        "1998\t2\tdivA\tmat\tall\tlen30\t700",
-        "1998\t2\tdivA\tmat\tall\tlen60\t320",
+        "; year\tstep\tarea\tstock\tlength\tnumber",
+        "1998\t1\tdivA\timm\tlen10\t200",
+        "1998\t1\tdivA\tmat\tlen30\t650",
+        "1998\t1\tdivA\tmat\tlen40\t460",
+        "1998\t1\tdivA\tmat\tlen50\t500",
+        "1998\t2\tdivA\timm\tlen30\t350",
+        "1998\t2\tdivA\timm\tlen60\t650",
+        "1998\t2\tdivA\tmat\tlen20\t220",
+        "1998\t2\tdivA\tmat\tlen30\t700",
+        "1998\t2\tdivA\tmat\tlen60\t320",
         NULL), "datafile updated")
     ok(cmp_file(gd, "Aggfiles/stockdistribution.stockdistribution.area.agg",
         ver_string,
         "divA\t1",
         NULL), "area aggregation file")
-    ok(cmp_file(gd, "Aggfiles/stockdistribution.stockdistribution.age.agg",
-        ver_string,
-        "all\tX",
-        NULL), "age aggregtaion file")
     ok(cmp_file(gd, "Aggfiles/stockdistribution.stockdistribution.len.agg",
         ver_string,
         "len0\t0\t10",
@@ -226,4 +223,67 @@ ok_group("Maturity stage samples", {
         "len80\t80\t90",
         "len90\t90\t100",
         NULL), "len aggregation file")
+})
+
+ok_group("Samples with NULL groupings", {
+    # Set-up areas/divisions
+    mfdb_import_area(mdb, data.frame(id = c(1,2,3), name = c('45G01', '45G02', '45G03'), size = c(5)))
+    mfdb_import_division(mdb, list(divA = c('45G01', '45G02'), divB = c('45G01')))
+
+    # Import a survey
+    mfdb_import_survey(mdb,
+        data_source = 'samples-with-null-groupings',
+        data.frame(
+            year = c('1998'),
+            month = c(1:12),
+            areacell = c('45G01'),
+            species = c('CLL'),
+            maturity_stage = c(  1,  2,  3,  1,  2,  3,   1,  2,  3,  1,  2,  3),
+            age =            c(  8,  9, 10,  7,  8, 15,  10, 10, 10, 10, 11, 12),
+            length =         c( 10, 50, 30, 10, 35, 46,  65, 62, 36, 35, 34, 22),
+            count =          c(100,500,300,100,350,460, 650,320,360,350,340,220)))
+
+    # Initalise a gadget directory to output into
+    gd <- gadget_directory(tempfile())
+
+    # Treat the maturity stage as a stock, divide up into mature and immature
+    agg_data <- mfdb_sample_meanweight(mdb, c('age'), list(
+            year = 1998:2000,
+            area = mfdb_group(divA = c("divA")),
+            age = NULL,
+            species = 'CLL',
+            timestep = mfdb_timestep_biannually))
+
+    # Write it into a likelihood component
+    gadget_dir_write(gd, gadget_likelihood_component(
+        'catchstatistics', data = agg_data[[1]]))
+
+    # Likelihood file has a component
+    ok(cmp_file(gd, "likelihood",
+        ver_string,
+        "; ",
+        "[component]",
+        "name\tcatchstatistics",
+        "weight\t0",
+        "type\tcatchstatistics",
+        "datafile\tData/catchstatistics.catchstatistics.weightnostddev",
+        "function\tweightnostddev",
+        "areaaggfile\tAggfiles/catchstatistics.catchstatistics.area.agg",
+        "ageaggfile\tAggfiles/catchstatistics.catchstatistics.age.agg",
+        "fleetnames\t",
+        "stocknames\t"
+        ), "Likelihood file updated")
+
+    # Data files written
+    ok(cmp_file(gd, "Data/catchstatistics.catchstatistics.weightnostddev",
+        ver_string,
+        "; -- data --",
+        "; year\tstep\tarea\tage\tnumber\tmean",
+        "1998\t1\tdivA\tall\t1810\tNA",
+        "1998\t2\tdivA\tall\t2240\tNA",
+        NULL), "datafile updated")
+    ok(cmp_file(gd, "Aggfiles/catchstatistics.catchstatistics.age.agg",
+        ver_string,
+        "all\t7\t15",
+        NULL), "age aggregation file autodiscovered min and max")
 })

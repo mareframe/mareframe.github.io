@@ -1,10 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: MareFrame DB queries</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="R.css">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame DB queries</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
 </head><body>
 
-<table width="100%" summary="page for mfdb_queries {mfdb}"><tr><td>mfdb_queries {mfdb}</td><td align="right">R Documentation</td></tr></table>
+<table width="100%" summary="page for mfdb_queries {mfdb}"><tr><td>mfdb_queries {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
 
 <h2>MareFrame DB queries</h2>
 
@@ -19,11 +18,14 @@
 <pre>
 mfdb_area_size(mdb, params)
 mfdb_temperature(mdb, params)
-mfdb_sample_count(mdb, cols, params)
-mfdb_sample_meanlength(mdb, cols, params)
-mfdb_sample_meanlength_stddev(mdb, cols, params)
-mfdb_sample_meanweight(mdb, cols, params)
-mfdb_sample_meanweight_stddev(mdb, cols, params)
+mfdb_survey_index_mean(mdb, cols, params)
+mfdb_sample_count(mdb, cols, params, scale_index = NULL)
+mfdb_sample_meanlength(mdb, cols, params, scale_index = NULL)
+mfdb_sample_meanlength_stddev(mdb, cols, params, scale_index = NULL)
+mfdb_sample_totalweight(mdb, cols, params)
+mfdb_sample_meanweight(mdb, cols, params, scale_index = NULL)
+mfdb_sample_meanweight_stddev(mdb, cols, params, scale_index = NULL)
+mfdb_stomach_presenceratio(mdb, cols, params)
 </pre>
 
 
@@ -41,6 +43,10 @@ mfdb_sample_meanweight_stddev(mdb, cols, params)
 <tr valign="top"><td><code>params</code></td>
 <td>
 <p>A list of parameters, see details.</p>
+</td></tr>
+<tr valign="top"><td><code>scale_index</code></td>
+<td>
+<p>Optional. survey_index used to scale results before aggregation</p>
 </td></tr>
 </table>
 
@@ -112,21 +118,33 @@ data that is returned.
 <p>To save specifying the same items repeatedly, you can use list
 concatenation to keep some defaults, for example:
 </p>
-<PRE>
+<pre>
 defaults &lt;- list(year = 1998:2000)
 mfdb_sample_meanlength(mdb, c('age'), c(list(), defaults))
-</PRE>
+</pre>
+<p><code>scale_index</code> allows you to scale samples before aggregation. If 
+it contains the name of a survey index (see <a href="mfdb_import.html">mfdb_import_survey_index</a>),
+then any counts will be scaled by the value for that areacell before and used in
+aggregation / weighted averages.
+</p>
 
 
 <h3>Value</h3>
 
-<p>All will return a list of data.frame objects. Precisely what columns
-these will contain depends on the function called.
+<p>All will return a list of data.frame objects. If there was no bootstrapping
+requested, there will be only one. Otherwise, there will be one for each
+sample.
+</p>
+<p>The columns of these data frames depends on the function called.
 </p>
 
 <dl>
 <dt>mfdb_temperature</dt><dd>
 <p>Returns year, step, area, (mean) temperature
+</p>
+</dd>
+<dt>mfdb_survey_index_mean</dt><dd>
+<p>Returns year, step, area, (group cols), (mean) survey index
 </p>
 </dd>
 <dt>mfdb_sample_count</dt><dd>
@@ -139,6 +157,10 @@ these will contain depends on the function called.
 </dd>
 <dt>mfdb_sample_meanlength_stddev</dt><dd>
 <p>As mfdb_sample_meanlength, but also returns std. deviation.
+</p>
+</dd>
+<dt>mfdb_sample_totalweight</dt><dd>
+<p>Returns year,step,area,(group cols),total (weight of group)
 </p>
 </dd>
 <dt>mfdb_sample_meanweight</dt><dd>
@@ -171,5 +193,5 @@ gadget_dir_write(gd, gadget_likelihood_component("catchdistribution",
 
 ## End(Not run)</pre>
 
-<hr><div align="center">[Package <em>mfdb</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 3.1-0 <a href="00Index.html">Index</a>]</div>
 </body></html>

@@ -1,7 +1,7 @@
 Package: mfdb
 Type: Package
 Title: MareFrame DB querying library
-Version: 1.0
+Version: 3.1-0
 Date: 2014-04-23
 Author: Jamie Lentin
 Maintainer: Jamie Lentin <jamie.lentin@shuttlethread.com>
@@ -10,6 +10,6 @@ Description: Tools to query a MareFrame DB and reformat results in forms
 License: GPL-3
 Depends: R (>= 3.1.1)
 Imports: logging (>= 0.7-103), DBI (>= 0.3.1), RPostgreSQL (>= 0.4)
-Suggests: unittest
+Suggests: unittest (>= 1.2)
 LazyData: true
-Built: R 3.1.2; ; 2014-12-07 20:01:33 UTC; unix
+Built: R 3.2.0; ; 2015-05-21 14:37:18 UTC; unix

@@ -1,10 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: MareFrame DB class</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="R.css">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame DB class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
 </head><body>
 
-<table width="100%" summary="page for mfdb {mfdb}"><tr><td>mfdb {mfdb}</td><td align="right">R Documentation</td></tr></table>
+<table width="100%" summary="page for mfdb {mfdb}"><tr><td>mfdb {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
 
 <h2>MareFrame DB class</h2>
 
@@ -39,8 +38,10 @@ name from <code>mfdb::case_study</code>.
 <tr valign="top"><td><code>db_params</code></td>
 <td>
 
-<p>Extra parameters to supply to a <code>DBI</code> connection object. By
-default it will search for a PostgreSQL &quot;mf&quot; database locally.
+<p>Extra parameters to supply to <code>DBI::dbConnect</code>. By default it will
+search for a &quot;mf&quot; database locally, but you can override any of the parameters,
+in particular <code>host</code>, <code>dbname</code>, <code>user</code>, <code>password</code>.
+See <code>methods?RPostgreSQL::dbConnect</code> for more information.
 </p>
 </td></tr>
 <tr valign="top"><td><code>destroy_schema</code></td>
@@ -84,5 +85,5 @@ for later inspection.
 
 ## End(Not run)</pre>
 
-<hr><div align="center">[Package <em>mfdb</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 3.1-0 <a href="00Index.html">Index</a>]</div>
 </body></html>

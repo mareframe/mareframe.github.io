@@ -1,10 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: MareFrame DB querying library</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="R.css">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame DB querying library</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
 </head><body>
 
-<table width="100%" summary="page for mfdb-package {mfdb}"><tr><td>mfdb-package {mfdb}</td><td align="right">R Documentation</td></tr></table>
+<table width="100%" summary="page for mfdb-package {mfdb}"><tr><td>mfdb-package {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
 
 <h2>
 MareFrame DB querying library
@@ -22,50 +21,50 @@ useful for GADGET and EwE models.
 
 <table summary="Rd table">
 <tr>
- <td align="left">
-Package: </td><td align="left"> mfdb</td>
+ <td style="text-align: left;">
+Package: </td><td style="text-align: left;"> mfdb</td>
 </tr>
 <tr>
- <td align="left">
-Type: </td><td align="left"> Package</td>
+ <td style="text-align: left;">
+Type: </td><td style="text-align: left;"> Package</td>
 </tr>
 <tr>
- <td align="left">
-Version: </td><td align="left"> 1.0</td>
+ <td style="text-align: left;">
+Version: </td><td style="text-align: left;"> 3.1-0</td>
 </tr>
 <tr>
- <td align="left">
-Date: </td><td align="left"> 2014-04-23</td>
+ <td style="text-align: left;">
+Date: </td><td style="text-align: left;"> 2014-04-23</td>
 </tr>
 <tr>
- <td align="left">
-License: </td><td align="left"> GPL-3</td>
+ <td style="text-align: left;">
+License: </td><td style="text-align: left;"> GPL-3</td>
 </tr>
 <tr>
- <td align="left">
-Depends: </td><td align="left"> R (&gt;= 3.1.1)</td>
+ <td style="text-align: left;">
+Depends: </td><td style="text-align: left;"> R (&gt;= 3.1.1)</td>
 </tr>
 <tr>
- <td align="left">
-Imports: </td><td align="left"> 
+ <td style="text-align: left;">
+Imports: </td><td style="text-align: left;"> 
 logging (&gt;= 0.7-103),
 DBI (&gt;= 0.3.1),
 RPostgreSQL (&gt;= 0.4)</td>
 </tr>
 <tr>
- <td align="left">
-Suggests: </td><td align="left"> unittest</td>
+ <td style="text-align: left;">
+Suggests: </td><td style="text-align: left;"> unittest</td>
 </tr>
 <tr>
- <td align="left">
-LazyData: </td><td align="left"> true</td>
+ <td style="text-align: left;">
+LazyData: </td><td style="text-align: left;"> true</td>
 </tr>
 <tr>
- <td align="left">
-Built: </td><td align="left"> R 3.1.1; ; 2014-12-04 13:31:31 UTC; unix</td>
+ <td style="text-align: left;">
+Built: </td><td style="text-align: left;"> R 3.1.1; ; 2014-12-04 13:31:31 UTC; unix</td>
 </tr>
 <tr>
- <td align="left">
+ <td style="text-align: left;">
 </td>
 </tr>
 
@@ -73,7 +72,7 @@ Built: </td><td align="left"> R 3.1.1; ; 2014-12-04 13:31:31 UTC; unix</td>
 
 <p>Index:
 </p>
-<PRE>
+<pre>
 gadget_areafile         Gadget area files
 gadget_directory        Gadget directory objects
 gadget_file             Gadget file objects
@@ -88,14 +87,14 @@ mfdb_import_survey      MareFrame Import functions
 mfdb_interval           MareFrame DB intervals
 mfdb_step_interval      MareFrame DB intervals
 mfdb_unaggregated       MareFrame DB unaggregated data
-</PRE>
+</pre>
 
 
 <h3>Introduction &amp; Schema description</h3>
 
 <p>Before doing anything with <span class="pkg">mfdb</span>, it is worth knowing a bit about how data
 is stored. Broadly, there are 2 basic types of table in <span class="pkg">mfdb</span>,
-<EM>taxonomy</EM> and <EM>measurement</EM> tables.
+<em>taxonomy</em> and <em>measurement</em> tables.
 </p>
 <p>The measurement tables store all forms of sample data supported, at the finest
 available detail. These are then aggregated when using any of the mfdb query
@@ -209,18 +208,20 @@ These will also be used to generate GADGET aggregation files later.
 </p>
 <p>For example, the following queries the temperature table:
 </p>
-<PRE>
+<pre>
 defaults &lt;- list(
     area = mfdb_group("101" = ),
     timestep = mfdb_timestep_quarterly, # Group months to create 2 timesteps for each year
     year = 1996:2005)
 agg_data &lt;- mfdb_temperature(mdb, defaults)
-</PRE>
-All functions will result in a list of data.frame result tables (generally
+</pre>
+<p>All functions will result in a list of data.frame result tables (generally
 only one, unless you requested bootstrapping). Each are suitable for
 feeding into a gadget function to output into model files.
-See <a href="mfdb_queries.html">mfdb_sample_count</a> for more information or 
+</p>
+<p>See <a href="mfdb_queries.html">mfdb_sample_count</a> for more information or 
 <a href="../demo">the demo directory</a> for concrete examples.
+</p>
 
 
 <h3>Creating GADGET files</h3>
@@ -234,13 +235,14 @@ directory.
 corresponding GADGET file, for instance, the following will create a GADGET
 area file in your gadget directory:
 </p>
-<PRE>
+<pre>
 gadget_dir_write(gd,gadget_areafile(
     size = mfdb_area_size(mdb, defaults)[[1]],
     temperature = mfdb_temperature(mdb, defaults)[[1]]))
-</PRE>
-See <a href="gadget_areafile.html">gadget_areafile</a> or <a href="gadget_likelihood_component.html">gadget_likelihood_component</a> for more
+</pre>
+<p>See <a href="gadget_areafile.html">gadget_areafile</a> or <a href="gadget_likelihood_component.html">gadget_likelihood_component</a> for more
 information or <a href="../demo">the demo directory</a> for concrete examples.
+</p>
 
 
 <h3>Author(s)</h3>
@@ -253,8 +255,9 @@ information or <a href="../demo">the demo directory</a> for concrete examples.
 
 <h3>See Also</h3>
 
-<p><code><a href="../../gadgetr/html/gadgetr-package.html">gadgetr</a></code>
+<p><a href="https://github.com/bthe/rgadget">rgadget</a>,
+<a href="http://www.hafro.is/gadget/userguide/userguide.html">Gadget user guide</a>
 </p>
 
-<hr><div align="center">[Package <em>mfdb</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 3.1-0 <a href="00Index.html">Index</a>]</div>
 </body></html>

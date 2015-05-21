@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Gadget stock files</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for gadget_stockfile {mfdb}"><tr><td>gadget_stockfile {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Gadget stock files</h2>
+
+<h3>Description</h3>
+
+<p>Structures representing a GADGET stock file
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+gadget_stockfile_extremes(stock_name, data)
+gadget_stockfile_refweight(stock_name, data)
+gadget_stockfile_initialconditions(stock_name, data)
+gadget_stockfile_recruitment(stock_name, data)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>stock_name</code></td>
+<td>
+
+<p>A name, e.g. <code>cod.imm</code>, used as the name for the stockfile
+</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+
+<p>A data.frame used to generate the data. See details.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The columns required in the <code>data</code> varies depends on which function you
+are using.
+</p>
+<p><code>gadget_stockfile_extremes</code> requires <code>age</code> and <code>length</code> columns
+and populates <code>minlength</code>, <code>minage</code>, <code>maxlength</code>, <code>maxage</code>.
+The values are obtained by the grouping used, rather than the
+maximum values in the data. If you want the minimum and maximum from the data,
+query with <code>length = NULL, age = NULL</code>, so the table contains &quot;all&quot;
+and the grouping contains the actual minimum and maximum.
+</p>
+<p><code>gadget_stockfile_refweight</code> requires a <code>length</code> column and a
+<code>mean</code> column representing mean weight for that length group. It populates
+the <code>refweightfile</code> and <code>dl</code>.
+</p>
+<p><code>gadget_stockfile_initialconditions</code> requires <code>area</code>, <code>age</code>,
+<code>length</code>, <code>number</code> and <code>mean</code> (weight) columns. Populates
+initialconditions <code>minlength</code>, <code>minage</code>, <code>maxlength</code>, <code>maxage</code>,
+<code>dl</code> and the <code>numberfile</code>. As before, the min/max values are populated
+using the groupings you specify, not the min/max available data.
+</p>
+<p><code>gadget_stockfile_recruitment</code> requires <code>year</code>, <code>step</code>, <code>area</code>,
+<code>age</code>, <code>length</code>, <code>number</code> and <code>mean</code> (weight) columns. Populates
+<code>doesrenew</code>, <code>minlength</code>, <code>maxlength</code>, <code>dl</code>, <code>numberfile</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The return value is a <code>gadget_stockfile</code> object that can be written
+to the filesystem with <code>gadget_dir_write</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Write min/max values and refweight file 
+## Not run: 
+gd &lt;- gadget_directory('./out')
+imm_data &lt;- mfdb_sample_meanweight(mdb, c('age', 'length'), list(
+    age = NULL, # The age column will say 'all', but will know the min/max
+    length = mfdb_step_interval('', 10, to = 100),
+    species = 'COD',
+    maturity_stage = '1',
+    null = NULL))
+
+# Write both min/max and refweighfile into our gadget directory
+gadget_dir_write(gd, gadget_stockfile_extremes('cod.imm', imm_data[[1]]))
+gadget_dir_write(gd, gadget_stockfile_refweight('cod.imm', imm_data[[1]]))
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 3.1-0 <a href="00Index.html">Index</a>]</div>
+</body></html>
