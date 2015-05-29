@@ -12,4 +12,4 @@ Depends: R (>= 3.1.1)
 Imports: logging (>= 0.7-103), DBI (>= 0.3.1), RPostgreSQL (>= 0.4)
 Suggests: unittest (>= 1.2)
 LazyData: true
-Built: R 3.2.0; ; 2015-05-29 12:26:00 UTC; unix
+Built: R 3.2.0; ; 2015-05-29 12:26:32 UTC; unix
