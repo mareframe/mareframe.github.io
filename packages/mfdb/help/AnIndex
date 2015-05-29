@@ -8,6 +8,7 @@ gadget_directory	gadget_directory
 gadget_dir_read	gadget_directory
 gadget_dir_write	gadget_directory
 gadget_file	gadget_file
+gadget_fleet_component	gadget_fleetfile
 gadget_likelihood_component	gadget_likelihood_component
 gadget_stockfile_extremes	gadget_stockfile
 gadget_stockfile_initialconditions	gadget_stockfile

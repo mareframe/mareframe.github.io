@@ -1,6 +1,8 @@
 gadget_areafile         Gadget area files
 gadget_directory        Gadget directory objects
 gadget_file             Gadget file objects
+gadget_fleet_component
+                        Gadget fleet files
 gadget_likelihood_component
                         Gadget likelihood components
 gadget_stockfile_extremes
