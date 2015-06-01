@@ -245,6 +245,25 @@ information or <a href="../demo">the demo directory</a> for concrete examples.
 </p>
 
 
+<h4>Stock and fleet files</h4>
+
+<p>Stocks and fleets aren't explicitly defined in the database. Instead, they are
+definied by querying on a column that differentiates them. For example, if
+your &quot;immature cod&quot; stock is definied as cod that is between maturity stages 1
+and 2, then if querying for a stockdistribution component, one could do:
+</p>
+<pre>
+    mfdb_sample_count(mdb, c('maturity_stage', 'age', 'length'), list(
+        species = 'COD',
+        maturity_stage = c(imm = 1:2, mat = 3:5),
+        . . .
+    )
+</pre>
+<p>...and the maturity_stage column will be treated as the stock.
+</p>
+
+
+
 <h3>Author(s)</h3>
 
 <p>Jamie Lentin
