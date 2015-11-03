@@ -7,4 +7,4 @@ At present, `vadt` is able to:
 - Present diet information. For vertebrates, the units are number eaten per second and for invertebrates, the units are mg N/m3 eaten per second
 - Present aggregated plots of vertebrates and invertebrates
 
-To start the application, click a tab, e.g. **Functional Groups**, **Spatial Plots**, etc. Then select the functional group you are interested. Some plots have tabs on the left side of the page which can be clicked (e.g. the Interactive Plots tab). 
+To start the application, click a tab, e.g. **Spatial Plots**, etc. Then select the functional group you are interested. Some plots have tabs on the left side of the page which can be clicked (e.g. the Interactive Plots tab). 
