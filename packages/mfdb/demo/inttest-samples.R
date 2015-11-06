@@ -27,6 +27,13 @@ ok_group("Unaggregated length / weight / age samples", {
     mfdb_import_area(mdb, data.frame(id = c(1,2,3), name = c('45G01', '45G02', '45G03'), size = c(5)))
     mfdb_import_division(mdb, list(divA = c('45G01', '45G02'), divB = c('45G01')))
 
+    # Set up the vessels we use in this example
+    mfdb_import_vessel_taxonomy(mdb, data.frame(
+        name = c('1.RSH', '2.RSH'),
+        vessel_type = c('1.RSH', '2.RSH'),
+        stringsAsFactors = FALSE
+    ))
+
     # Import a survey
     mfdb_import_survey(mdb,
         data_source = 'survey1',
@@ -495,4 +502,36 @@ ok_group("Invalid import", {
                 length = c( 10, 50, 30, 10, 35, 46,  65, 62, 36, 35, 34, 22),
                 weight = c(101,500,300,100,350,460, 650,320,360,350,340,220))),
         "13,28,0"), "Notice when month isn't within 1..12")
+})
+
+ok_group("Removing an import", {
+    # Can insert nothing without an error
+    mfdb_import_survey(mdb, data_source = 'empty_survey', data.frame())
+    ok(cmp(
+        unattr(mfdb_sample_count(mdb, c(), list(year = c('1998'), data_source = 'empty_survey'))[['0.0.0']]),
+        data.frame()),
+       "No data available")
+
+    # Importing data still works
+    mfdb_import_survey(mdb,
+        data_source = 'empty_survey',
+        data.frame(
+            Year = c('1998'),
+            month = c(1:12),
+            areacell = c('45G01'),
+            species = c('COD'),
+            age =    c(  1,  2,  1,  2,  1,  2,   1,  2,  1,  2,  1,  2),
+            length = c( 10, 50, 30, 10, 35, 46,  65, 62, 36, 35, 34, 22),
+            weight = c(100,500,300,100,350,460, 650,320,360,350,340,220)))
+    ok(cmp(
+        unattr(mfdb_sample_count(mdb, c(), list(year = c('1998'), data_source = 'empty_survey'))[['0.0.0']]),
+        data.frame(year = as.integer(1998), step = 'all', area = 'all', number = 12, stringsAsFactors = FALSE)),
+       "empty_survey content imported")
+
+    # Gone again
+    mfdb_import_survey(mdb, data_source = 'empty_survey', data.frame())
+    ok(cmp(
+        unattr(mfdb_sample_count(mdb, c(), list(year = c('1998'), data_source = 'empty_survey'))[['0.0.0']]),
+        data.frame()),
+       "Data removed again")
 })

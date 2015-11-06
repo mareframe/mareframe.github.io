@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame DB intervals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mfdb_aggregate_interval {mfdb}"><tr><td>mfdb_aggregate_interval {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>MareFrame DB intervals</h2>
+
+<h3>Description</h3>
+
+<p>Represent a uniform or non-uniform interval.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mfdb_interval(prefix, vect, open_ended = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>prefix</code></td>
+<td>
+
+<p>(required) A character prefix to prepend to minimum to create list names
+</p>
+</td></tr>
+<tr valign="top"><td><code>vect</code></td>
+<td>
+
+<p>(required) A vector representing the minimum for each group, and the maximum
+</p>
+</td></tr>
+<tr valign="top"><td><code>open_ended</code></td>
+<td>
+
+<p>If true, the last group will include everything &gt;= the last value in vect
+</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Make groups of len40 (40--60), len60 (60--80)
+g1 &lt;- mfdb_interval("len", c(40, 60, 80))
+
+## Use seq to make life easier
+g2 &lt;- mfdb_interval("len", seq(40, 80, by = 20))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

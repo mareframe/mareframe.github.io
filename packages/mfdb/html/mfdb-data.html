@@ -17,14 +17,13 @@
 
 <pre>
 case_study
-fleet
 gear
 institute
 market_category
 maturity_stage
 sex
 species
-vessel
+vessel_type
 </pre>
 
 
@@ -42,12 +41,15 @@ line, e.g. <kbd>mfdb::gear</kbd>
 </dd>
 <dt>name</dt><dd>
 <p>An alphanumeric ID to be used when importing and reporting data.
-Can contain multiple sections separated by dots to represent a tree,
-for example: &quot;FARMYARD.COWS.DAISY&quot;.
 </p>
 </dd>
 <dt>description</dt><dd>
 <p>Some text describing the option.
+</p>
+</dd>
+<dt>t_group</dt><dd>
+<p>Groups together several items to query all in one go. e.g. for
+institutes you can query 'NOR' to get all institutes in Norway.
 </p>
 </dd>
 </dl>
@@ -60,16 +62,16 @@ for example: &quot;FARMYARD.COWS.DAISY&quot;.
 <p>Possible case studies, use when connecting with <a href="mfdb.html">mfdb</a>()
 </p>
 </dd>
-<dt>gear, institute, vessel</dt><dd>
-<p>Used to describe the dataset being imported with <a href="mfdb_import.html">mfdb_import_survey</a>()
+<dt>gear, institute, vessel_type</dt><dd>
+<p>Used to describe the dataset being imported with <a href="mfdb_import_data.html">mfdb_import_survey</a>()
 </p>
 </dd>
 <dt>sex, maturity_stage, species</dt><dd>
-<p>Used for individual sample points when using <a href="mfdb_import.html">mfdb_import_survey</a>()
+<p>Used for individual sample points when using <a href="mfdb_import_data.html">mfdb_import_survey</a>()
 </p>
 </dd>
 </dl>
 
 
-<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 3.1-0 <a href="00Index.html">Index</a>]</div>
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
 </body></html>

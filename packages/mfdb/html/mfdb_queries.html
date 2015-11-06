@@ -19,6 +19,7 @@
 mfdb_area_size(mdb, params)
 mfdb_temperature(mdb, params)
 mfdb_survey_index_mean(mdb, cols, params)
+mfdb_survey_index_total(mdb, cols, params)
 mfdb_sample_count(mdb, cols, params, scale_index = NULL)
 mfdb_sample_meanlength(mdb, cols, params, scale_index = NULL)
 mfdb_sample_meanlength_stddev(mdb, cols, params, scale_index = NULL)
@@ -46,7 +47,7 @@ mfdb_stomach_presenceratio(mdb, cols, params)
 </td></tr>
 <tr valign="top"><td><code>scale_index</code></td>
 <td>
-<p>Optional. survey_index used to scale results before aggregation</p>
+<p>Optional. survey_index used to scale results before aggregation, either &quot;tow_length&quot; or from <a href="mfdb_import_data.html">mfdb_import_survey_index</a></p>
 </td></tr>
 </table>
 
@@ -101,7 +102,7 @@ data that is returned.
 </p>
 
 <dl>
-<dt>institute</dt><dd><p>A vector of institute names, see mfdb::institute for possible values</p>
+<dt>institute</dt><dd><p>A vector of institute names / countries, see mfdb::institute for possible values</p>
 </dd>
 <dt>gear</dt><dd><p>A vector of gear names, see mfdb::gear for possible values</p>
 </dd>
@@ -123,9 +124,10 @@ defaults &lt;- list(year = 1998:2000)
 mfdb_sample_meanlength(mdb, c('age'), c(list(), defaults))
 </pre>
 <p><code>scale_index</code> allows you to scale samples before aggregation. If 
-it contains the name of a survey index (see <a href="mfdb_import.html">mfdb_import_survey_index</a>),
+it contains the name of a survey index (see <a href="mfdb_import_data.html">mfdb_import_survey_index</a>),
 then any counts will be scaled by the value for that areacell before and used in
-aggregation / weighted averages.
+aggregation / weighted averages. As a special case, you can use &quot;tow_length&quot; to
+to scale counts by the tow length.
 </p>
 
 
@@ -145,6 +147,10 @@ sample.
 </dd>
 <dt>mfdb_survey_index_mean</dt><dd>
 <p>Returns year, step, area, (group cols), (mean) survey index
+</p>
+</dd>
+<dt>mfdb_survey_index_total</dt><dd>
+<p>Returns year, step, area, (group cols), (sum) survey index
 </p>
 </dd>
 <dt>mfdb_sample_count</dt><dd>
@@ -193,5 +199,5 @@ gadget_dir_write(gd, gadget_likelihood_component("catchdistribution",
 
 ## End(Not run)</pre>
 
-<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 3.1-0 <a href="00Index.html">Index</a>]</div>
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
 </body></html>

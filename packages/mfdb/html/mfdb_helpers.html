@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame tools &amp; helpers</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mfdb_helpers {mfdb}"><tr><td>mfdb_helpers {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>MareFrame tools &amp; helpers</h2>
+
+<h3>Description</h3>
+
+<p>Misc. functions to aid working with an MFDB database.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+# Find species from abbreviated names
+mfdb_find_species(partial_name)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>partial_name</code></td>
+<td>
+
+<p>Vector of partial species names, e.g. &quot;Gad Mor&quot;, &quot;gad. Mor.&quot;,
+&quot;Gadus Mor&quot;, will all match &quot;Cod (Gadus Morhua)&quot;.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A matrix of all potential id, name &amp; descriptions for each item in
+<code>partial_name</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+mfdb_find_species(c("gad mor", "tube worms"))
+#             gad mor              tube worms              
+# id          8791030402           1e+10                   
+# name        "COD"                "TBX"                   
+# description "Cod (Gadus Morhua)" "Tube Worms (Tubeworms)"
+
+# Can also generate a map to help insert a data.frame of foreign data
+## Not run: 
+# Work out a map from all Prey_Species_Name values to MFDB species codes
+species_map &lt;- mfdb_find_species(levels(stomachs$Prey_Species_Name))['name',]
+# Only include data where there is one possible solution
+species_map &lt;- vapply(
+    species_map,
+    function (names) if(length(names) == 1) names else as.character(NA),
+    "")
+
+# Can then remap the species column with:
+plyr::revalue(stomachs$Prey_Species_Name, species_map)
+
+## End(Not run)</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

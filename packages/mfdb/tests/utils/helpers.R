@@ -91,6 +91,8 @@ fake_mdb <- function(save_temp_tables = FALSE, case_study_id = 0) {
             logger = logger,
             save_temp_tables = save_temp_tables,
             case_study_id = case_study_id,
+            schema = 'fake_schema',
+            temp_schema = 'fake_temp_schema',
             state = new.env(),
             db = structure(list(), class="dbNull"),
         class = "mfdb")))
@@ -116,3 +118,9 @@ table_string <- function (str) {
 
 # Shuffle the rows of a data.frame
 shuffle_df <- function(df) df[sample(nrow(df)),]
+
+# Remove our attributes from a dataframe
+unattr <- function (obj) {
+    attributes(obj) <- attributes(obj)[c('names', 'row.names', 'class')]
+    obj
+}

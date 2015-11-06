@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame Taxonomy import functions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mfdb_import_taxonomy {mfdb}"><tr><td>mfdb_import_taxonomy {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>MareFrame Taxonomy import functions</h2>
+
+<h3>Description</h3>
+
+<p>Functions to import taxonomy data into MareFrame DB
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+    mfdb_import_area(mdb, data_in)
+    mfdb_import_division(mdb, data_in)
+    mfdb_import_sampling_type(mdb, data_in)
+    mfdb_import_tow_taxonomy(mdb,  data_in)
+    mfdb_import_vessel_taxonomy(mdb,  data_in)
+
+    mfdb_import_cs_taxonomy(mdb, taxonomy_name, data_in)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>mdb</code></td>
+<td>
+
+<p>Database connection created by <code>mfdb()</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>taxonomy_name</code></td>
+<td>
+
+<p>The name of the taxonomy to import, if there isn't a special function for it.
+See <code>mfdb:::mfdb_cs_taxonomy</code> for possible values.
+</p>
+</td></tr>
+<tr valign="top"><td><code>data_in</code></td>
+<td>
+
+<p>A <code>data.frame</code> of data to import, see details.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>MFDB taxonomies define the values you can use when importing / querying for data.
+They need to be populated with the values you need before data is imported. Most
+taxonomies are pre-populated by the MFDB package, so you should use the predefined
+values. Others however this does not make sense, so should be done separately. This
+is what these functions do.
+</p>
+<p><code>mfdb_import_division</code> is a special case, which imports groupings of areacells
+into divisions. The <code>data_in</code> should be a list of areacell vectors, with
+division names. For example, <code>list(divA = c('45G01', '45G02', '45G03'))</code>
+</p>
+<p>Beyond this, all functions accept the following columns:
+</p>
+
+<dl>
+<dt>id</dt><dd><p>Optional. A numeric ID to use internally, defaults to 1..n</p>
+</dd>
+<dt>name</dt><dd><p>Required. A vector of short names to use in data, e.g. &quot;SEA&quot;</p>
+</dd>
+<dt>t_group</dt><dd><p>Optional. A vector of the that groups together a set of values</p>
+</dd>
+</dl>
+
+<p>Note that the database doesn't use your short names internally. This means you can
+rename items by changing what <code>name</code> is set to. <code>t_group</code> allows taxonomy
+values to be grouped together. For example, giving all vessels in a fleet the same
+t_group you can then query the entire fleet as well as individually.
+</p>
+<p><code>mfdb_import_area</code> imports areacell information for your case study.
+Beyond the above, you can also provide the following:
+</p>
+
+<dl>
+<dt>size</dt><dd><p>The size of the areacell</p>
+</dd>
+</dl>
+
+<p><code>mfdb_import_vessel_taxonomy</code> imports names of vessels into the
+taxonomy table, so they can be used when importing samples. As well as the above, you can
+also specify:
+</p>
+
+<dl>
+<dt>full_name</dt><dd><p>Optional. The full name of this vessel</p>
+</dd>
+<dt>length</dt><dd><p>Optional. The length of the vessel in meters</p>
+</dd>
+<dt>power</dt><dd><p>Optional. The vessel's engine power in KW</p>
+</dd>
+<dt>tonnage</dt><dd><p>Optional. The vessel's gross tonnage</p>
+</dd>
+</dl>
+
+<p><code>mfdb_import_vessel_taxonomy</code> imports names of vessels into the
+taxonomy table, so they can be used when importing samples. As well as the
+above, you can also specify:
+</p>
+
+<dl>
+<dt>latitude</dt><dd><p>Optional.</p>
+</dd>
+<dt>longitude</dt><dd><p>Optional.</p>
+</dd>
+<dt>depth</dt><dd><p>Optional. Depth in meters</p>
+</dd>
+<dt>length</dt><dd><p>Optional. Length in meters</p>
+</dd>
+</dl>
+
+<p><code>mfdb_import_sampling_type</code> imports sampling types so that you can then use
+these against records in the <code>sample</code> table. You can also provide:
+</p>
+
+<dl>
+<dt>description</dt><dd><p>Optional. A vector of descriptive names, e.g. &quot;sea sampling&quot;</p>
+</dd>
+</dl>
+
+
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

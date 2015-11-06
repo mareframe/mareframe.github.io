@@ -8,6 +8,7 @@ all_components <- c(
         "catchdistribution",
         "catchstatistics",
         "stockdistribution",
+        "surveydistribution",
         "stomachcontent",
         "migrationpenalty",
         "catchinkilos",
@@ -57,7 +58,10 @@ for (type in all_components) {
             data = data.frame(year = 1, step = 1, area = 1, age = 1, length = 1, number = 1))
     } else if (type == "stockdistribution") {
         default_opts <- list(type,
-            data = data.frame(year = 1, step = 1, area = 1, aardvark = 1, length = 1, number = 1))
+            data = data.frame(year = 1, step = 1, area = 1, aardvark = 1, age = 1, length = 1, number = 1))
+    } else if (type == "surveydistribution") {
+        default_opts <- list(type,
+            data = data.frame(year = 1, step = 1, area = 1, age = 1, length = 1, number = 1))
     } else if (type == "stomachcontent") {
         default_opts <- list(type,
             data = data.frame(year = 1, step = 1, area = 1, predator = 1, prey = 1, ratio = 1),
@@ -247,6 +251,12 @@ ok_group("Function either provided explicitly or based on generator", {
 
     ok(cmp_error(
         gadget_likelihood_component("catchstatistics", data = structure(
+            data.frame(),
+            generator = "mfdb_sample_meanlength_stddev")),
+        "data given to gadget_catchstatistics_component is empty"), "Noticed missing data")
+
+    ok(cmp_error(
+        gadget_likelihood_component("catchstatistics", data = structure(
             data.frame(year = 1990, step = 1, area = 1, age = 1, number = 1, mean = 1),
             generator = "mfdb_sample_meanlength_stddev")),
         "stddev"), "Noticed missing column")
@@ -309,7 +319,7 @@ ok_group("Aggregation files", {
         "len20\t20\t30",
         "len30\t30\t40",
         "len40\t40\t50",
-        NULL), "mfdb_interval")
+        NULL), "mfdb_interval (with len, so min/max)")
 
     ok(cmp_agg('len', mfdb_step_interval("len", to = 30, by = 5),
         ver_string,
@@ -319,7 +329,32 @@ ok_group("Aggregation files", {
         "len15\t15\t20",
         "len20\t20\t25",
         "len25\t25\t30",
-        NULL), "mfdb_step_interval")
+        NULL), "mfdb_step_interval (with len, so min/max)")
+
+    ok(cmp_agg('age', mfdb_interval("age", seq(0, 20, by = 10)),
+        ver_string,
+        "age0\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9",
+        "age10\t10\t11\t12\t13\t14\t15\t16\t17\t18\t19",
+        NULL), "mfdb_interval (with age, so discrete numbers)")
+
+    ok(cmp_agg('age', mfdb_step_interval("age", to = 30, by = 5),
+        ver_string,
+        "age0\t0\t1\t2\t3\t4",
+        "age5\t5\t6\t7\t8\t9",
+        "age10\t10\t11\t12\t13\t14",
+        "age15\t15\t16\t17\t18\t19",
+        "age20\t20\t21\t22\t23\t24",
+        "age25\t25\t26\t27\t28\t29",
+        NULL), "mfdb_step_interval (with age, so discrete numbers)")
+
+    ok(cmp_agg('age', mfdb_step_interval("age", to = 5, by = 1),
+        ver_string,
+        "age0\t0",
+        "age1\t1",
+        "age2\t2",
+        "age3\t3",
+        "age4\t4",
+        NULL), "mfdb_step_interval (with age, so discrete numbers)")
 
 })
 

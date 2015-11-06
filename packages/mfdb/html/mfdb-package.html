@@ -30,7 +30,7 @@ Type: </td><td style="text-align: left;"> Package</td>
 </tr>
 <tr>
  <td style="text-align: left;">
-Version: </td><td style="text-align: left;"> 3.1-0</td>
+Version: </td><td style="text-align: left;"> 4.0-0</td>
 </tr>
 <tr>
  <td style="text-align: left;">
@@ -154,8 +154,8 @@ measurement doesn't correlate to a specific areacell.
 for instance <code>mfdb_group(north = 1:3, south = 4:6)</code> will put anything in
 divisions 1&ndash;3 under an area named &quot;north&quot;, 4&ndash;5 under an area named &quot;south&quot;.
 </p>
-<p>areacells and divisions are defined using <a href="mfdb_import.html">mfdb_import_area</a>() and
-<a href="mfdb_import.html">mfdb_import_division</a>() respectively. Before you can upload any measurements,
+<p>areacells and divisions are defined using <a href="mfdb_import_taxonomy.html">mfdb_import_area</a>() and
+<a href="mfdb_import_taxonomy.html">mfdb_import_division</a>() respectively. Before you can upload any measurements,
 you have to define the areacells that they will use.
 </p>
 
@@ -165,7 +165,7 @@ you have to define the areacells that they will use.
 
 <p>Any survey data can have a sampling type defined, which then can be used when
 querying data. If you want to use a sampling type, then define it using
-<a href="mfdb_import.html">mfdb_import_sampling_type</a>().
+<a href="mfdb_import_taxonomy.html">mfdb_import_sampling_type</a>().
 </p>
 
 
@@ -174,21 +174,21 @@ querying data. If you want to use a sampling type, then define it using
 
 <p>At this point, you can start uploading actual measurements. The easiest of
 which is temperature. Upload a table of areacell/month/temperature data
-using <a href="mfdb_import.html">mfdb_import_temperature</a>()
+using <a href="mfdb_import_data.html">mfdb_import_temperature</a>()
 </p>
 
 
 
 <h4>Import survey data</h4>
 
-<p>Finally, import any survey data using <a href="mfdb_import.html">mfdb_import_survey</a>(). Ideally
+<p>Finally, import any survey data using <a href="mfdb_import_data.html">mfdb_import_survey</a>(). Ideally
 upload your data in separate chunks. For example, if you have length and
 age-length data, don't combine them in R, upload them separately and both
 will be used when querying for length data. This keeps the process simple,
 and allows you to swap out data as necessary
 </p>
 
-<p>See <a href="mfdb_import.html">mfdb_import_survey</a> for more information or 
+<p>See <a href="mfdb_import_data.html">mfdb_import_survey</a> for more information or 
 <a href="../demo">the demo directory</a> for concrete examples.
 </p>
 
@@ -278,5 +278,5 @@ and 2, then if querying for a stockdistribution component, one could do:
 <a href="http://www.hafro.is/gadget/userguide/userguide.html">Gadget user guide</a>
 </p>
 
-<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 3.1-0 <a href="00Index.html">Index</a>]</div>
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
 </body></html>

@@ -1,17 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><title>R: MareFrame DB querying library</title>
+<head><title>R: MareFrame DB Querying Library</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="R.css" />
 </head><body>
-<h1> MareFrame DB querying library
+<h1> MareFrame DB Querying Library
 <img class="toplogo" src="../../../doc/html/logo.jpg" alt="[R logo]" />
 </h1>
 <hr/>
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;mfdb&rsquo; version 3.1-0</h2>
+</div><h2>Documentation for package &lsquo;mfdb&rsquo; version 4.0-0</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>
@@ -28,8 +28,6 @@
 <tr><td style="width: 25%;"><a href="mfdb-data.html">case_study</a></td>
 <td>MareFrame DB Datasets</td></tr>
 <tr><td style="width: 25%;"><a href="mfdb-data.html">digestion_stage</a></td>
-<td>MareFrame DB Datasets</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb-data.html">fleet</a></td>
 <td>MareFrame DB Datasets</td></tr>
 <tr><td style="width: 25%;"><a href="gadget_areafile.html">gadget_areafile</a></td>
 <td>Gadget area files</td></tr>
@@ -67,7 +65,7 @@
 <td>MareFrame DB Datasets</td></tr>
 <tr><td style="width: 25%;"><a href="mfdb_queries.html">mfdb_area_size</a></td>
 <td>MareFrame DB queries</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_group.html">mfdb_bootstrap_group</a></td>
+<tr><td style="width: 25%;"><a href="mfdb_aggregate_group.html">mfdb_bootstrap_group</a></td>
 <td>MareFrame DB groups</td></tr>
 <tr><td style="width: 25%;"><a href="mfdb_bulk.html">mfdb_cs_dump</a></td>
 <td>MareFrame DB Dump / Restore</td></tr>
@@ -75,27 +73,33 @@
 <td>MareFrame DB Dump / Restore</td></tr>
 <tr><td style="width: 25%;"><a href="mfdb.html">mfdb_disconnect</a></td>
 <td>MareFrame DB class</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_group.html">mfdb_group</a></td>
+<tr><td style="width: 25%;"><a href="mfdb_helpers.html">mfdb_find_species</a></td>
+<td>MareFrame tools &amp; helpers</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_aggregate_group.html">mfdb_group</a></td>
 <td>MareFrame DB groups</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_group.html">mfdb_group_numbered</a></td>
+<tr><td style="width: 25%;"><a href="mfdb_aggregate_group.html">mfdb_group_numbered</a></td>
 <td>MareFrame DB groups</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_import.html">mfdb_import_area</a></td>
-<td>MareFrame Import functions</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_import.html">mfdb_import_cs_taxonomy</a></td>
-<td>MareFrame Import functions</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_import.html">mfdb_import_division</a></td>
-<td>MareFrame Import functions</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_import.html">mfdb_import_sampling_type</a></td>
-<td>MareFrame Import functions</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_import.html">mfdb_import_stomach</a></td>
-<td>MareFrame Import functions</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_import.html">mfdb_import_survey</a></td>
-<td>MareFrame Import functions</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_import.html">mfdb_import_survey_index</a></td>
-<td>MareFrame Import functions</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_import.html">mfdb_import_temperature</a></td>
-<td>MareFrame Import functions</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_interval.html">mfdb_interval</a></td>
+<tr><td style="width: 25%;"><a href="mfdb_import_taxonomy.html">mfdb_import_area</a></td>
+<td>MareFrame Taxonomy import functions</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_import_taxonomy.html">mfdb_import_cs_taxonomy</a></td>
+<td>MareFrame Taxonomy import functions</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_import_taxonomy.html">mfdb_import_division</a></td>
+<td>MareFrame Taxonomy import functions</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_import_taxonomy.html">mfdb_import_sampling_type</a></td>
+<td>MareFrame Taxonomy import functions</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_import_data.html">mfdb_import_stomach</a></td>
+<td>MareFrame Data Import functions</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_import_data.html">mfdb_import_survey</a></td>
+<td>MareFrame Data Import functions</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_import_data.html">mfdb_import_survey_index</a></td>
+<td>MareFrame Data Import functions</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_import_data.html">mfdb_import_temperature</a></td>
+<td>MareFrame Data Import functions</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_import_taxonomy.html">mfdb_import_tow_taxonomy</a></td>
+<td>MareFrame Taxonomy import functions</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_import_taxonomy.html">mfdb_import_vessel_taxonomy</a></td>
+<td>MareFrame Taxonomy import functions</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_aggregate_interval.html">mfdb_interval</a></td>
 <td>MareFrame DB intervals</td></tr>
 <tr><td style="width: 25%;"><a href="mfdb_queries.html">mfdb_sample_count</a></td>
 <td>MareFrame DB queries</td></tr>
@@ -109,21 +113,23 @@
 <td>MareFrame DB queries</td></tr>
 <tr><td style="width: 25%;"><a href="mfdb_queries.html">mfdb_sample_totalweight</a></td>
 <td>MareFrame DB queries</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_step_interval.html">mfdb_step_interval</a></td>
+<tr><td style="width: 25%;"><a href="mfdb_aggregate_step_interval.html">mfdb_step_interval</a></td>
 <td>MareFrame DB intervals</td></tr>
 <tr><td style="width: 25%;"><a href="mfdb_queries.html">mfdb_stomach_presenceratio</a></td>
 <td>MareFrame DB queries</td></tr>
 <tr><td style="width: 25%;"><a href="mfdb_queries.html">mfdb_survey_index_mean</a></td>
 <td>MareFrame DB queries</td></tr>
+<tr><td style="width: 25%;"><a href="mfdb_queries.html">mfdb_survey_index_total</a></td>
+<td>MareFrame DB queries</td></tr>
 <tr><td style="width: 25%;"><a href="mfdb_queries.html">mfdb_temperature</a></td>
 <td>MareFrame DB queries</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_group.html">mfdb_timestep_biannually</a></td>
+<tr><td style="width: 25%;"><a href="mfdb_aggregate_group.html">mfdb_timestep_biannually</a></td>
 <td>MareFrame DB groups</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_group.html">mfdb_timestep_quarterly</a></td>
+<tr><td style="width: 25%;"><a href="mfdb_aggregate_group.html">mfdb_timestep_quarterly</a></td>
 <td>MareFrame DB groups</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_group.html">mfdb_timestep_yearly</a></td>
+<tr><td style="width: 25%;"><a href="mfdb_aggregate_group.html">mfdb_timestep_yearly</a></td>
 <td>MareFrame DB groups</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb_unaggregated.html">mfdb_unaggregated</a></td>
+<tr><td style="width: 25%;"><a href="mfdb_aggregate_unaggregated.html">mfdb_unaggregated</a></td>
 <td>MareFrame DB unaggregated data</td></tr>
 <tr><td style="width: 25%;"><a href="gadget_file.html">print.gadget_file</a></td>
 <td>Gadget file objects</td></tr>
@@ -135,7 +141,7 @@
 <td>MareFrame DB Datasets</td></tr>
 <tr><td style="width: 25%;"><a href="mfdb-data.html">stomach_state</a></td>
 <td>MareFrame DB Datasets</td></tr>
-<tr><td style="width: 25%;"><a href="mfdb-data.html">vessel</a></td>
+<tr><td style="width: 25%;"><a href="mfdb-data.html">vessel_type</a></td>
 <td>MareFrame DB Datasets</td></tr>
 </table>
 </body></html>

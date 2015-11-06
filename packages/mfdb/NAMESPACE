@@ -2,7 +2,7 @@
 export(mfdb_cs_dump)
 export(mfdb_cs_restore)
 
-# mfdb_group.R
+# mfdb_aggregate_group.R
 export(mfdb_group)
 export(mfdb_timestep_yearly)
 export(mfdb_timestep_biannually)
@@ -10,10 +10,10 @@ export(mfdb_timestep_quarterly)
 export(mfdb_group_numbered)
 export(mfdb_bootstrap_group)
 
-# mfdb_interval.R
+# mfdb_aggregate_interval.R
 export(mfdb_interval)
 
-# mfdb_step_interval.R
+# mfdb_aggregate_step_interval.R
 export(mfdb_step_interval)
 
 # mfdb.R
@@ -23,21 +23,29 @@ importFrom(logging, getLogger)
 export(mfdb)
 export(mfdb_disconnect)
 
-# mfdb_import.R
-export(mfdb_import_survey)
+# mfdb_helpers.R
+export(mfdb_find_species)
+
+# mfdb_import_data.R
+export(mfdb_import_temperature)
 export(mfdb_import_survey_index)
+export(mfdb_import_survey)
+export(mfdb_import_stomach)
+
+# mfdb_import_taxonomy.R
 export(mfdb_import_area)
 export(mfdb_import_division)
-export(mfdb_import_temperature)
 export(mfdb_import_sampling_type)
 export(mfdb_import_cs_taxonomy)
-export(mfdb_import_stomach)
+export(mfdb_import_tow_taxonomy)
+export(mfdb_import_vessel_taxonomy)
 
 # mfdb_queries.R
 #alsoUses(logging, getLogger)
 export(mfdb_area_size)
 export(mfdb_temperature)
 export(mfdb_survey_index_mean)
+export(mfdb_survey_index_total)
 export(mfdb_sample_count)
 export(mfdb_sample_meanlength_stddev)
 export(mfdb_sample_meanlength)
@@ -46,7 +54,7 @@ export(mfdb_sample_meanweight)
 export(mfdb_sample_meanweight_stddev)
 export(mfdb_stomach_presenceratio)
 
-# mfdb_unaggregated.R
+# mfdb_aggregate_unaggregated.R
 export(mfdb_unaggregated)
 
 # gadget_areafile.R

@@ -12,8 +12,11 @@ mfdb-data               MareFrame DB Datasets
 mfdb-package            MareFrame DB querying library
 mfdb_area_size          MareFrame DB queries
 mfdb_cs_dump            MareFrame DB Dump / Restore
+mfdb_find_species       MareFrame tools & helpers
 mfdb_group              MareFrame DB groups
-mfdb_import_survey      MareFrame Import functions
+mfdb_import_area        MareFrame Taxonomy import functions
+mfdb_import_temperature
+                        MareFrame Data Import functions
 mfdb_interval           MareFrame DB intervals
 mfdb_step_interval      MareFrame DB intervals
 mfdb_unaggregated       MareFrame DB unaggregated data
