@@ -26,6 +26,9 @@ mfdb_sample_meanlength_stddev(mdb, cols, params, scale_index = NULL)
 mfdb_sample_totalweight(mdb, cols, params)
 mfdb_sample_meanweight(mdb, cols, params, scale_index = NULL)
 mfdb_sample_meanweight_stddev(mdb, cols, params, scale_index = NULL)
+mfdb_stomach_preycount(mdb, cols, params)
+mfdb_stomach_preymeanlength(mdb, cols, params)
+mfdb_stomach_preymeanweight(mdb, cols, params)
 mfdb_stomach_presenceratio(mdb, cols, params)
 </pre>
 
@@ -175,6 +178,22 @@ sample.
 </dd>
 <dt>mfdb_sample_meanweight_stddev</dt><dd>
 <p>As mfdb_sample_meanweight, but also returns std. deviation.
+</p>
+</dd>
+<dt>mfdb_stomach_preycount</dt><dd>
+<p>Returns year, step, area, (cols), number (of prey found in stomach)
+</p>
+</dd>
+<dt>mfdb_stomach_preymeanlength</dt><dd>
+<p>Returns year, step, area, (cols), number, mean_length (of prey found in stomach)
+</p>
+</dd>
+<dt>mfdb_stomach_preymeanweight</dt><dd>
+<p>Returns year, step, area, (cols), number, mean_weight (of prey found in stomach)
+</p>
+</dd>
+<dt>mfdb_stomach_presenceratio</dt><dd>
+<p>Returns year, step, area, (cols), ratio (of selected prey in stomach to all prey by count)
 </p>
 </dd>
 </dl>
