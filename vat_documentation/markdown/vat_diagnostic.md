@@ -1,4 +1,6 @@
-The visualising [Atlantis](http://atlantis.cmar.csiro.au/) toolbox, `vat`, was created by Christopher David Desjardins at the [Science Institute at the University of Iceland](http://raunvis.hi.is/rhformE.php) as a part of the [EU MareFrame project](http://www.mareframe-fp7.org/) with code contributions from Vidette McGregor at [NIWA](http://www.niwa.co.nz/) and Erla Sturludottir at the [Science Institute at the University of Iceland](http://raunvis.hi.is/rhformE.php).  `vat` is released under the [GPL v3 or later](http://www.gnu.org/copyleft/gpl.html) and source code is available at [http://github.com/cddesja](http://github.com/cddesja).
+The visualising [Atlantis](http://atlantis.cmar.csiro.au/) toolbox, `vat`, was created by Christopher David Desjardins at the [Science Institute at the University of Iceland](http://raunvis.hi.is/rhformE.php) as a part of the [EU MareFrame project](http://www.mareframe-fp7.org/) with code contributions from Vidette McGregor at [NIWA](http://www.niwa.co.nz/) and Erla Sturludottir at the [Science Institute at the University of Iceland](http://raunvis.hi.is/rhformE.php).  
+
+`vat` is released under the [GPL v3 or later](http://www.gnu.org/copyleft/gpl.html) and source code is available at [http://github.com/cddesja](http://github.com/cddesja).
 
 At present, `vat` is able to:
 - Display within and across box distributions for functional groups by age classes.
