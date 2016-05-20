@@ -11,6 +11,8 @@ mfdb                    MareFrame DB class
 mfdb-data               MareFrame DB Datasets
 mfdb-package            MareFrame DB querying library
 mfdb_area_size          MareFrame DB queries
+mfdb_concatenate_results
+                        MareFrame Query Utilities
 mfdb_cs_dump            MareFrame DB Dump / Restore
 mfdb_find_species       MareFrame tools & helpers
 mfdb_group              MareFrame DB groups

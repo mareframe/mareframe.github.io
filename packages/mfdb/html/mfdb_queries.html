@@ -26,9 +26,12 @@ mfdb_sample_meanlength_stddev(mdb, cols, params, scale_index = NULL)
 mfdb_sample_totalweight(mdb, cols, params)
 mfdb_sample_meanweight(mdb, cols, params, scale_index = NULL)
 mfdb_sample_meanweight_stddev(mdb, cols, params, scale_index = NULL)
+mfdb_sample_rawdata(mdb, cols, params, scale_index = NULL)
+mfdb_sample_scaled(mdb, cols, params, abundance_scale = NULL, scale = 'tow_length')
 mfdb_stomach_preycount(mdb, cols, params)
 mfdb_stomach_preymeanlength(mdb, cols, params)
 mfdb_stomach_preymeanweight(mdb, cols, params)
+mfdb_stomach_preyweightratio(mdb, cols, params)
 mfdb_stomach_presenceratio(mdb, cols, params)
 </pre>
 
@@ -51,6 +54,14 @@ mfdb_stomach_presenceratio(mdb, cols, params)
 <tr valign="top"><td><code>scale_index</code></td>
 <td>
 <p>Optional. survey_index used to scale results before aggregation, either &quot;tow_length&quot; or from <a href="mfdb_import_data.html">mfdb_import_survey_index</a></p>
+</td></tr>
+<tr valign="top"><td><code>abundance_scale</code></td>
+<td>
+<p>Optional. Same as <code>scale_index</code></p>
+</td></tr>
+<tr valign="top"><td><code>scale</code></td>
+<td>
+<p>Optional. A scale to apply to the resulting values, e.g. 'tow_length'</p>
 </td></tr>
 </table>
 
@@ -180,16 +191,31 @@ sample.
 <p>As mfdb_sample_meanweight, but also returns std. deviation.
 </p>
 </dd>
+<dt>mfdb_sample_rawdata</dt><dd>
+<p>Returns year,step,area,(group cols),number of samples, weight and length.
+</p>
+<p>NB: Unlike other functions, no aggregation is performed. This is mostly for debugging
+</p>
+</dd>
 <dt>mfdb_stomach_preycount</dt><dd>
 <p>Returns year, step, area, (cols), number (of prey found in stomach)
 </p>
 </dd>
 <dt>mfdb_stomach_preymeanlength</dt><dd>
-<p>Returns year, step, area, (cols), number, mean_length (of prey found in stomach)
+<p>Returns year, step, area, (cols),
+number (of prey found in stomach),
+mean_length (of prey found in stomach).
+NB: Entries where count is NA (i.e. totals) are ignored with this function.
 </p>
 </dd>
 <dt>mfdb_stomach_preymeanweight</dt><dd>
-<p>Returns year, step, area, (cols), number, mean_weight (of prey found in stomach)
+<p>Returns year, step, area, (cols),
+number (of unique stomachs in group),
+mean_weight (per unique stomach).
+</p>
+</dd>
+<dt>mfdb_stomach_preyweightratio</dt><dd>
+<p>Returns year, step, area, (cols), ratio (of selected prey in stomach to all prey by weight)
 </p>
 </dd>
 <dt>mfdb_stomach_presenceratio</dt><dd>
@@ -218,5 +244,5 @@ gadget_dir_write(gd, gadget_likelihood_component("catchdistribution",
 
 ## End(Not run)</pre>
 
-<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 5.0-0 <a href="00Index.html">Index</a>]</div>
 </body></html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame Query Utilities</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mfdb_helpers_mfdb_concatenate_results {mfdb}"><tr><td>mfdb_helpers_mfdb_concatenate_results {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>MareFrame Query Utilities</h2>
+
+<h3>Description</h3>
+
+<p>Aggregate data from the database in a variety of ways
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mfdb_concatenate_results(...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Any number of data.frames produced by mfdb query functions with identical columns, e.g. <code>mfdb_sample_count</code></p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Given any number of data.frames from mfdb query functions with identical
+columns, produces a combined data.frame, similar to <code>rbind</code> but
+preserving the attributes required to produce aggregation files.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 5.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

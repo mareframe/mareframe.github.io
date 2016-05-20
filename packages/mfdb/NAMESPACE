@@ -26,6 +26,7 @@ export(mfdb)
 export(mfdb_disconnect)
 
 # mfdb_helpers.R
+export(mfdb_concatenate_results)
 export(mfdb_find_species)
 
 # mfdb_import_data.R
@@ -54,9 +55,12 @@ export(mfdb_sample_meanlength)
 export(mfdb_sample_totalweight)
 export(mfdb_sample_meanweight)
 export(mfdb_sample_meanweight_stddev)
+export(mfdb_sample_rawdata)
+export(mfdb_sample_scaled)
 export(mfdb_stomach_preycount)
 export(mfdb_stomach_preymeanlength)
 export(mfdb_stomach_preymeanweight)
+export(mfdb_stomach_preyweightratio)
 export(mfdb_stomach_presenceratio)
 
 # mfdb_aggregate_unaggregated.R

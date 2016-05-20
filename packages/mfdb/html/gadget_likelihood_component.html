@@ -194,9 +194,9 @@ catchdistribution, stockdistribution.
 </dd>
 <dt>epsilon</dt><dd><p>To be used when calculated probability is low</p>
 </dd>
-<dt>prey_labels</dt><dd><p>Names for each of the </p>
+<dt>prey_labels</dt><dd><p>Either a vector of stock names to be used for all preys, or a list to match preys, see below</p>
 </dd>
-<dt>prey_digestion_coefficients</dt><dd><p>Optional. Digestion coefficients to put in prey aggregation file</p>
+<dt>prey_digestion_coefficients</dt><dd><p>Optional. Either a vector of coefficients fo be used for all preys, or a list to match preys, see below</p>
 </dd>
 <dt>predator_names</dt><dd><p>Vector of predator stock names</p>
 </dd>
@@ -204,6 +204,13 @@ catchdistribution, stockdistribution.
 </dd>
 </dl>
 
+<p>Both <code>prey_labels</code> and <code>prey_digestion_coefficients</code> allow you to
+match parts of prey labels and use repetition. For instance,
+<code>list("cod.mat" = "mature_cod", "cod" = "cod", "other")</code> will give
+&quot;cod.mat&quot; the label &quot;mature_cod&quot;, &quot;cod.imm&quot; the label &quot;cod&quot;, and anything
+else will get &quot;other&quot;. You can also use regular expression syntax, for example
+&quot;cod[0-9]&quot;.
+</p>
 <p><code>migrationpenalty</code> understands:
 </p>
 
@@ -239,5 +246,5 @@ gadget_likelihood_component("penalty",
 gadget_likelihood_component("understocking", name ="understock")
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 5.0-0 <a href="00Index.html">Index</a>]</div>
 </body></html>

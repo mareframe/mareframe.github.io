@@ -4,8 +4,9 @@
 ###   mfdb_survey_index_total mfdb_sample_count
 ###   mfdb_sample_meanlength_stddev mfdb_sample_meanlength
 ###   mfdb_sample_totalweight mfdb_sample_meanweight
-###   mfdb_sample_meanweight_stddev mfdb_stomach_preycount
-###   mfdb_stomach_preymeanlength mfdb_stomach_preymeanweight
+###   mfdb_sample_meanweight_stddev mfdb_sample_rawdata mfdb_sample_scaled
+###   mfdb_stomach_preycount mfdb_stomach_preymeanlength
+###   mfdb_stomach_preymeanweight mfdb_stomach_preyweightratio
 ###   mfdb_stomach_presenceratio
 
 ### ** Examples

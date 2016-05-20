@@ -41,6 +41,11 @@ mfdb_cs_restore(mdb, in_location)
 
 <h3>Details</h3>
 
+<p>Deprecated: These commands aren't strictly necessary any more. In most
+situations it will be easier to use Postgres' <code>pg_dump</code> and <code>pg_restore</code>.
+See <a href="mfdb-package.html">mfdb-package</a> for some examples of how to do it. These functions
+don't offer much more functionality and much slower.
+</p>
 <p><code>mfdb_cs_dump</code> copies all data from the database/case-study that <code>mdb</code>
 is connected to, and writes it out to files in <code>out_location</code>. If this
 ends with 'tar.gz', then all files will be put into a tarball with the name
@@ -65,5 +70,5 @@ mfdb_cs_restore(mdb_in, '/tmp/cs_dump.tar.gz')
 
 ## End(Not run)</pre>
 
-<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 5.0-0 <a href="00Index.html">Index</a>]</div>
 </body></html>

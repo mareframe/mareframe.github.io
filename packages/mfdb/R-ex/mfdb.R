@@ -14,7 +14,7 @@
 ##D     mfdb_disconnect(mdb)
 ##D 
 ##D     # Destroy everything, since schema was out of date.
-##D     mfdb('', destroy_schema = TRUE)
+##D     mfdb('Iceland', destroy_schema = TRUE)
 ## End(Not run)
 
 

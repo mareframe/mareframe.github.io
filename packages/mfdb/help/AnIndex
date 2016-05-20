@@ -21,6 +21,7 @@ mfdb	mfdb
 mfdb-data	mfdb-data
 mfdb_area_size	mfdb_queries
 mfdb_bootstrap_group	mfdb_aggregate_group
+mfdb_concatenate_results	mfdb_helpers_mfdb_combine_results
 mfdb_cs_dump	mfdb_bulk
 mfdb_cs_restore	mfdb_bulk
 mfdb_disconnect	mfdb
@@ -43,12 +44,15 @@ mfdb_sample_meanlength	mfdb_queries
 mfdb_sample_meanlength_stddev	mfdb_queries
 mfdb_sample_meanweight	mfdb_queries
 mfdb_sample_meanweight_stddev	mfdb_queries
+mfdb_sample_rawdata	mfdb_queries
+mfdb_sample_scaled	mfdb_queries
 mfdb_sample_totalweight	mfdb_queries
 mfdb_step_interval	mfdb_aggregate_step_interval
 mfdb_stomach_presenceratio	mfdb_queries
 mfdb_stomach_preycount	mfdb_queries
 mfdb_stomach_preymeanlength	mfdb_queries
 mfdb_stomach_preymeanweight	mfdb_queries
+mfdb_stomach_preyweightratio	mfdb_queries
 mfdb_survey_index_mean	mfdb_queries
 mfdb_survey_index_total	mfdb_queries
 mfdb_temperature	mfdb_queries

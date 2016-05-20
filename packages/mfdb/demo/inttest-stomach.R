@@ -17,7 +17,7 @@ cmp_table <- function(tbls, expected) {
 
 # Empty database & rebuild
 if (exists("mdb")) mfdb_disconnect(mdb)
-mfdb('', db_params = db_params, destroy_schema = TRUE)
+mfdb('Test', db_params = db_params, destroy_schema = TRUE)
 mdb <- mfdb('Test', db_params = db_params, save_temp_tables = FALSE)
 
 # Set-up areas/divisions
@@ -45,8 +45,8 @@ A		CAP		1	1	10	5
 A		CAP		1	4	40	1
 B		CAP		1	1	10	5
 B		CAP		4	1	10	5
-B		CAP		5	1	10	8
-B		CAP		5	1	10	5
+B		CAP		5	1	10	NA
+B		CAP		5	1	10	NA
 C		CLL		2	3.5	9.5	3
 
 D		CAP		1	1.4	10	1
@@ -100,7 +100,7 @@ E		CAP		1	1.4	10	1
              digestion_stage = c('digested', 'digested', 'digested', 'undigested', 'undigested'),
              prey_length = c('pl1', 'pl3', 'pl4', 'pl1', 'pl4'),
              number = c(
-                 5 + 8 + 5,
+                 5 + 0 + 0,
                  3,
                  1,
                  5 + 5 + 1 + 1,
@@ -115,10 +115,10 @@ E		CAP		1	1.4	10	1
          data.frame(
              year = 'all', step = 'all', area = 'all',
              digestion_stage = c('digested', 'undigested'),
-             number = c(sum(5, 8, 5, 3, 1), sum(5, 1, 5, 1, 1)),
+             number = c(sum(5, 0, 0, 3, 1), sum(5, 1, 5, 1, 1)),
              mean_length = c(
                  weighted.mean(c(1, 1, 1, 3.5, 4),
-                               c(5, 8, 5, 3,   1)),
+                               c(5, 0, 0, 3,   1)),
                  weighted.mean(c(1, 4, 1, 1.4, 1.4),
                                c(5, 1, 5, 1,   1)),
              NULL),
@@ -131,14 +131,32 @@ E		CAP		1	1.4	10	1
          data.frame(
              year = 'all', step = 'all', area = 'all',
              digestion_stage = c('digested', 'undigested'),
-             number = c(sum(5, 8, 5, 3, 1), sum(5, 1, 5, 1, 1)),
+             predator_count = c(6, 6),
              mean_weight = c(
-                 weighted.mean(c(10, 10, 10, 9.5, 40),
-                               c( 5,  8,  5,   3,  1)),
-                 weighted.mean(c(10, 40, 10, 10, 10),
-                               c( 5,  1,  5,  1,  1)),
+                 (10*5 + 10*1 + 10*1 + 9.5*3 + 40*1) / 6,
+                 (10*5 + 40*1 + 10*5 + 10*1 + 10*1) / 6,
              NULL),
              stringsAsFactors = FALSE)), "Mean weight of all prey")
+
+     # Find out the ratio of capelin, grouped by digestion stage
+     ok(cmp_table(
+         mfdb_stomach_preyweightratio(mdb, c("predator_weight", "digestion_stage"), list(
+             predator_weight = mfdb_interval("w", c(200,300,400,500)),
+             digestion_stage = mfdb_group(undigested = 1, digested = 2:5),
+             prey_species = 'CAP')),
+         data.frame(
+             year = 'all', step = 'all', area = 'all',
+             predator_weight = c('w200', 'w200', 'w300'),
+             digestion_stage = c('digested', 'undigested', 'undigested'),
+             ratio = c(
+                 # digested CAP in B (stages 4 & 5) out of A, B, C
+                 sum(10*5, 10*1, 10*1) / sum(10*5, 40*1, 10*5, 10*5, 10*1, 10*1, 9.5*3),
+                 # undigested CAP in A, B out of A, B, C
+                 sum(10*5, 40*1, 10*5) / sum(10*5, 40*1, 10*5, 10*5, 10*1, 10*1, 9.5*3),
+                 # undigested CAP in D, E out of D, E
+                 sum(10, 10) / sum(10, 40, 10),
+                 NULL),
+             stringsAsFactors = FALSE)), "Ratio of stomach content by weight")
 })
 
 ok_group("Stomach content likelihood compoment", {
@@ -152,7 +170,12 @@ ok_group("Stomach content likelihood compoment", {
      gadget_dir_write(gd, gadget_likelihood_component(
          "stomachcontent",
          name = "cod-stomachs",
-         prey_labels = c("codimm", "codmat", "codother"),
+         prey_labels = list(
+             "cod50" = "codmat",
+             "cod" = c("codimm", "codother"),
+             "cap3" = "capmat",
+             "cap" = c("cap", "capimm"),
+             "other"),
          prey_digestion_coefficients = 3:1,
          predator_names = c("cuthbert", "dibble"),
          data = res[[1]]))
@@ -177,47 +200,73 @@ ok_group("Stomach content likelihood compoment", {
         ver_string,
         "; ",
         "cap1\t",
-        "codimm\tcodmat\tcodother",
+        "cap\tcapimm",
         "lengths\t1\t1.3",
         "digestioncoefficients\t3\t2\t1",
         "; ",
         "cap1.3\t",
-        "codimm\tcodmat\tcodother",
+        "cap\tcapimm",
         "lengths\t1.3\t3",
         "digestioncoefficients\t3\t2\t1",
         "; ",
         "cap3\t",
-        "codimm\tcodmat\tcodother",
+        "capmat\t",
         "lengths\t3\t5",
         "digestioncoefficients\t3\t2\t1",
         NULL), "prey aggregation file")
-
-     # Still works whe there's only 1 prey label
-     gadget_dir_write(gd, gadget_likelihood_component(
-         "stomachcontent",
-         name = "cod-stomachs",
-         prey_labels = c("cod"),
-         prey_digestion_coefficients = 3:1,
-         predator_names = c("cuthbert", "dibble"),
-         data = res[[1]]))
-    ok(cmp_file(gd, "Aggfiles/stomachcontent.cod-stomachs.prey.agg",
+    ok(cmp_file(gd, "Aggfiles/stomachcontent.cod-stomachs.len.agg",
         ver_string,
-        "; ",
-        "cap1\t",
-        "cod\t",
-        "lengths\t1\t1.3",
-        "digestioncoefficients\t3\t2\t1",
-        "; ",
-        "cap1.3\t",
-        "cod\t",
-        "lengths\t1.3\t3",
-        "digestioncoefficients\t3\t2\t1",
-        "; ",
-        "cap3\t",
-        "cod\t",
-        "lengths\t3\t5",
-        "digestioncoefficients\t3\t2\t1",
-        NULL), "prey aggregation file (only one label)")
+        "cod20\t20\t30",
+        "cod30\t30\t40",
+        "cod40\t40\t50",
+        NULL), "Predator length aggregation file")
+})
+
+ok_group("Stomach data with only weights", {
+    # Import a stomach survey, only have total weights
+    mfdb_import_stomach(mdb,
+        data_source = "cod2000",
+        predator_data = shuffle_df(table_string("
+stomach_name	year	month	areacell	species	length	weight
+A		2000	1	45G01		COD	21	210
+B		2000	1	45G01		COD	34	220
+C		2000	1	45G01		COD	34	230
+
+D		2000	1	45G01		COD	62	320
+E		2000	1	45G01		COD	33	330
+
+G		2000	1	45G01		COD	34	430
+        ")),
+        prey_data = shuffle_df(table_string("
+stomach_name	species	digestion_stage	weight_total
+A		CAP		1	10
+A		CAP		1	40
+B		CAP		1	10
+B		CAP		4	10
+B		CAP		5	10
+B		CAP		5	10
+C		CLL		2	9.5
+
+D		CAP		1	10
+D		CLL		5	40
+E		CAP		1	10
+        ")))
+
+     # Find out the ratio of capelin in stomachs
+     ok(cmp_table(
+         mfdb_stomach_presenceratio(mdb, c("predator_weight"), list(
+             predator_weight = mfdb_interval("w", c(200,300,400,500)),
+             prey_species = 'CAP')),
+         data.frame(
+             year = 'all', step = 'all', area = 'all',
+             predator_weight = c('w200', 'w300'),
+             ratio = c(
+                 # CAP in A, B out of A, B, C
+                 2 / 3,
+                 # CAP in D, E out of D, E
+                 2 / 2,
+                 NULL),
+             stringsAsFactors = FALSE)), "Aggregated & got ratio, by weight")
 })
 
 ok_group("Predator/Prey mismatch", {

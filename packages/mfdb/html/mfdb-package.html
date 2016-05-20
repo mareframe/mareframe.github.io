@@ -30,7 +30,7 @@ Type: </td><td style="text-align: left;"> Package</td>
 </tr>
 <tr>
  <td style="text-align: left;">
-Version: </td><td style="text-align: left;"> 4.0-0</td>
+Version: </td><td style="text-align: left;"> 5.0-0</td>
 </tr>
 <tr>
  <td style="text-align: left;">
@@ -193,6 +193,34 @@ and allows you to swap out data as necessary
 </p>
 
 
+<h4>Dumping / Restoring a DB</h4>
+
+<p>You can also dump/import a dump from another host using the postgres pg_dump
+and pg_restore commands. You can dump/restore indvidual schemas (i.e. the 
+case study you give to the mfdb() command), to list all the schemas installed
+run <code>SELECT DISTINCT(table_schema) FROM information_schema.tables</code> from
+psql. Note that if you use <code>mfdb('Baltic')</code>, the Postgres schema name will
+be lower-cased.
+</p>
+<p>Create a dump of your chosen schema with the following command:
+</p>
+<pre>
+pg_dump --schema=baltic -F tar mf &gt; baltic.tar
+</pre>
+<p>This will make a dump of the &quot;baltic&quot; case study into &quot;baltic.tar&quot;. It can
+then be restored onto another computer with the following:
+</p>
+<pre>
+pg_restore --clean -d mf baltic.tar
+</pre>
+<p>If you already have a baltic schema you wish to preserve, you can rename it
+first by issuing <code>ALTER SCHEMA baltic RENAME TO baltic_o</code> in psql. Once
+the restore is done you can rename the new schema and put the name of the old
+schema back.
+</p>
+
+
+
 <h3>Querying data</h3>
 
 <p>There are a selection of querying functions available, all of which work
@@ -278,5 +306,5 @@ and 2, then if querying for a stockdistribution component, one could do:
 <a href="http://www.hafro.is/gadget/userguide/userguide.html">Gadget user guide</a>
 </p>
 
-<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 5.0-0 <a href="00Index.html">Index</a>]</div>
 </body></html>
