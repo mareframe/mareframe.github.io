@@ -5,7 +5,7 @@
 ### ** Examples
 ## Not run: 
 ##D     # Connect to local DB, as the Iceland case study
-##D     mdb <- mfdb('Iceland')
+##D     mdb <- mfdb('iceland')
 ##D 
 ##D     # Connect to "mf2014" on remote DB server
 ##D     mdb <- mfdb('Iceland', db_params = list(host = "db.mareframe-fp7.org", dbname = "mf2014")
@@ -14,7 +14,7 @@
 ##D     mfdb_disconnect(mdb)
 ##D 
 ##D     # Destroy everything, since schema was out of date.
-##D     mfdb('Iceland', destroy_schema = TRUE)
+##D     mfdb('iceland', destroy_schema = TRUE)
 ## End(Not run)
 
 

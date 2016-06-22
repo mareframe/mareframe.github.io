@@ -155,6 +155,10 @@ sample.
 </p>
 
 <dl>
+<dt>mfdb_area_size</dt><dd>
+<p>Returns area, (total area) size
+</p>
+</dd>
 <dt>mfdb_temperature</dt><dd>
 <p>Returns year, step, area, (mean) temperature
 </p>
@@ -168,11 +172,11 @@ sample.
 </p>
 </dd>
 <dt>mfdb_sample_count</dt><dd>
-<p>Returns year,step,area,(group cols),number (of samples)
+<p>Returns year, step, area, (group cols), number (i.e sum of count)
 </p>
 </dd>
 <dt>mfdb_sample_meanlength</dt><dd>
-<p>Returns year,step,area,(group cols),number (of samples),mean (length in group)
+<p>Return year, step, area, (group cols), number (i.e sum of count), mean (length)
 </p>
 </dd>
 <dt>mfdb_sample_meanlength_stddev</dt><dd>
@@ -184,7 +188,7 @@ sample.
 </p>
 </dd>
 <dt>mfdb_sample_meanweight</dt><dd>
-<p>Returns year,step,area,(group cols),number (of samples),mean (weight of group)
+<p>Returns year, step, area, (group cols), number (i.e sum of count), mean (weight)
 </p>
 </dd>
 <dt>mfdb_sample_meanweight_stddev</dt><dd>
@@ -197,29 +201,33 @@ sample.
 <p>NB: Unlike other functions, no aggregation is performed. This is mostly for debugging
 </p>
 </dd>
+<dt>mfdb_sample_scaled</dt><dd>
+<p>Returns year, step, area, (group cols), number (i.e. sum of count, scaled by tow_length), mean_weight (scaled by tow_length)
+</p>
+</dd>
 <dt>mfdb_stomach_preycount</dt><dd>
-<p>Returns year, step, area, (cols), number (of prey found in stomach)
+<p>Returns year, step, area, (group cols), number (of prey found in stomach)
 </p>
 </dd>
 <dt>mfdb_stomach_preymeanlength</dt><dd>
-<p>Returns year, step, area, (cols),
+<p>Returns year, step, area, (group cols),
 number (of prey found in stomach),
 mean_length (of prey found in stomach).
 NB: Entries where count is NA (i.e. totals) are ignored with this function.
 </p>
 </dd>
 <dt>mfdb_stomach_preymeanweight</dt><dd>
-<p>Returns year, step, area, (cols),
+<p>Returns year, step, area, (group cols),
 number (of unique stomachs in group),
 mean_weight (per unique stomach).
 </p>
 </dd>
 <dt>mfdb_stomach_preyweightratio</dt><dd>
-<p>Returns year, step, area, (cols), ratio (of selected prey in stomach to all prey by weight)
+<p>Returns year, step, area, (group cols), ratio (of selected prey in stomach to all prey by weight)
 </p>
 </dd>
 <dt>mfdb_stomach_presenceratio</dt><dd>
-<p>Returns year, step, area, (cols), ratio (of selected prey in stomach to all prey by count)
+<p>Returns year, step, area, (group cols), ratio (of selected prey in stomach to all prey by count)
 </p>
 </dd>
 </dl>

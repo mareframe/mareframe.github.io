@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Atlantis stomach content parsers</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for R/atlantis_fisheries.R {mfdbatlantis}"><tr><td>R/atlantis_fisheries.R {mfdbatlantis}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Atlantis stomach content parsers</h2>
+
+<h3>Description</h3>
+
+<p>Routines to read and make use of the atlantis diet matrix
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+atlantis_fisheries(adir)
+atlantis_fisheries_catch(adir,
+        area_data,
+        fishery)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>adir</code></td>
+<td>
+<p>The atlantis directory created by <a href="atlantis_directory.html">atlantis_directory</a></p>
+</td></tr>
+<tr valign="top"><td><code>area_data</code></td>
+<td>
+<p>The results of <a href="atlantis_functions.html">atlantis_read_areas</a></p>
+</td></tr>
+<tr valign="top"><td><code>fishery</code></td>
+<td>
+<p>A single fishery from <a href="atlantis_fisheries.html">atlantis_fisheries</a></p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>atlantis_fisheries</code> returns a data.frame describing each fishery in the
+Atlantis output.
+</p>
+<p><code>atlantis_fisheries_catch</code> returns logbook output that can be ingested
+into MFDB.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mfdbatlantis</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

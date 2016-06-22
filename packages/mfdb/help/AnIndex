@@ -2,6 +2,11 @@ mfdb-package	mfdb-package
 as.character.gadget_file	gadget_file
 case_study	mfdb-data
 digestion_stage	mfdb-data
+ewe_diet	ewe_model
+ewe_model	ewe_model
+ewe_pedigree	ewe_model
+ewe_stanzas	ewe_model
+ewe_stanza_group	ewe_model
 gadget_areafile	gadget_areafile
 gadget_directory	gadget_directory
 gadget_dir_read	gadget_directory

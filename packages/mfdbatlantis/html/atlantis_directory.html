@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Open an Atlantis output directory</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for R/atlantis_directory.R {mfdbatlantis}"><tr><td>R/atlantis_directory.R {mfdbatlantis}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Open an Atlantis output directory</h2>
+
+<h3>Description</h3>
+
+<p>Open Atlantis output directory, find required files</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+atlantis_directory(path,
+        bgm_area = first_file(path, '*.bgm'),
+        nc_catch = first_file(path, "*CATCH.nc"),
+        nc_out = first_file(path, "*.nc"),
+        nc_prod = first_file(path, "*PROD.nc"),
+        txt_diet = first_file(path, "*DietCheck.txt"),
+        xml_bio = first_file(path, '*[Bb]io*.xml'),
+        xml_fg = first_file(path, '*Groups*.xml'),
+        xml_fisheries = first_file(path, '*Fisheries*.xml'),
+        xml_opt = first_file(path, '*[rR]un*.xml'),
+        start_year = 1948)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>path</code></td>
+<td>
+<p>Directory containing model output</p>
+</td></tr>
+<tr valign="top"><td><code>bgm_area</code></td>
+<td>
+<p>The BGM file that defines model boxes</p>
+</td></tr>
+<tr valign="top"><td><code>nc_catch</code></td>
+<td>
+<p>The .nc file containing catch data</p>
+</td></tr>
+<tr valign="top"><td><code>nc_out</code></td>
+<td>
+<p>The .nc file containing count and StructN</p>
+</td></tr>
+<tr valign="top"><td><code>nc_prod</code></td>
+<td>
+<p>The .nc file containing Eat</p>
+</td></tr>
+<tr valign="top"><td><code>txt_diet</code></td>
+<td>
+<p>The diet matrix</p>
+</td></tr>
+<tr valign="top"><td><code>xml_bio</code></td>
+<td>
+<p>XML biology file</p>
+</td></tr>
+<tr valign="top"><td><code>xml_fg</code></td>
+<td>
+<p>XML functional group definitions</p>
+</td></tr>
+<tr valign="top"><td><code>xml_fisheries</code></td>
+<td>
+<p>XML fisheries definitions</p>
+</td></tr>
+<tr valign="top"><td><code>xml_opt</code></td>
+<td>
+<p>XML run options</p>
+</td></tr>
+<tr valign="top"><td><code>start_year</code></td>
+<td>
+<p>The year the model is assumed to start at</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>All aguments apart from path are optional. If not supplied then it makes a best
+guess of the filename and errors if it can't be found.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The path to the directory, annotated with filenames</p>
+
+<hr /><div style="text-align: center;">[Package <em>mfdbatlantis</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

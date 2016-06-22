@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame DB EwE/Rpath interface</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for ewe_model {mfdb}"><tr><td>ewe_model {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>MareFrame DB EwE/Rpath interface</h2>
+
+<h3>Description</h3>
+
+<p>Transform the results of MFDB queries for use in an EwE model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ewe_stanza_group(survey_data)
+ewe_stanzas(survey_data)
+ewe_model(area_data, survey_data, catch_data = NULL)
+ewe_diet(consumption_data)
+ewe_pedigree(survey_data, catch_data = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>area_data</code></td>
+<td>
+<p>Results of an <code>mfdb_area_size</code> query, aggregating the whole area</p>
+</td></tr>
+<tr valign="top"><td><code>survey_data</code></td>
+<td>
+<p>Results of an <code>mfdb_sample_totalweight</code> query, normally for one year, aggregated by the model's functional groups</p>
+</td></tr>
+<tr valign="top"><td><code>catch_data</code></td>
+<td>
+<p>Results of an <code>mfdb_sample_totalweight</code> query, normally for one year, aggregated by the model's functional groups and 'vessel'</p>
+</td></tr>
+<tr valign="top"><td><code>consumption_data</code></td>
+<td>
+<p>Results of an <code>mfdb_stomach_preyweightratio</code> query, aggregated by functional groups</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>EwE requires stanzas and groups of stanzas, these are made up using the first
+and any other groupings in MFDB. For example, if <code>survey_data</code> was made
+with a query like <code>mfdb_sample_totalweight(mdb, c('species', 'age'), ...)</code>,
+then the species will make up the generated stanza_groups, and age will make up
+the stanzas within those groups.
+</p>
+<p><code>catch_data</code> requires data that is also aggregated by vessel, this will be
+ignored for the purposes of deciding the stanza/stanza_group.
+</p>
+<p><code>consumption_data</code> treats prey groupings seperate to predator groupings,
+and all will be added to the diet matrix. 
+</p>
+<p>See <a href="mfdb_queries.html">mfdb_sample_totalweight</a> for more information on how groupings can be used in
+queries.
+</p>
+
+
+<h3>Value</h3>
+
+<p>All return data.frame objects matching the EwE output, apart from diet which
+returns the diet matrix as a matrix.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre># See demo/example-ewe.R for a full-length example</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 5.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

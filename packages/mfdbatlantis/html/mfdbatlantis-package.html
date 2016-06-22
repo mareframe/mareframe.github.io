@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MFDB Atlantis Interface</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mfdbatlantis-package {mfdbatlantis}"><tr><td>mfdbatlantis-package {mfdbatlantis}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>MFDB Atlantis Interface</h2>
+
+<h3>Description</h3>
+
+<p>Tools to extract data from Atlantis model output and transform it into forms
+suitable for ingesting into MFDB.
+</p>
+
+
+<h3>Overview</h3>
+
+<p>The mfdbatlantis package contains the following groups of functions:
+</p>
+
+<dl>
+<dt>atlantis_directory</dt><dd>
+<p>Open a model directory, define names of common atlantis output files.
+</p>
+</dd>
+<dt>atlantis_read_areas, atlantis_functional_groups</dt><dd>
+<p>Read in area and functional group definitions, for use in other
+functions.
+</p>
+</dd>
+<dt>atlantis_tracer_*, atlantis_temperature</dt><dd>
+<p>Read the tracer files to generate temperature and simulated survey
+outputs, ready for ingesting into MFDB.
+</p>
+</dd>
+<dt>atlantis_fisheries_*</dt><dd>
+<p>Read in catch data from defined Atlantis fisheries, so it can be
+uploaded as logbook data into MFDB.
+</p>
+</dd>
+<dt>atlantis_stomach_*</dt><dd>
+<p>Expand output from a simulated survey to include stomach content data.
+</p>
+</dd>
+</dl>
+
+<p>The best way to undestand the usage is to read through the supplied demo
+scripts in the <a href="../demo">the demo directory</a>.
+</p>
+<pre>
+&gt; library(mfdbatlantis)
+&gt; demo('lake-victoria', package='mfdbatlantis', ask = FALSE)
+&gt; demo('iceland', package='mfdbatlantis', ask = FALSE)
+</pre>
+
+
+<h3>Acknowledgements</h3>
+
+<p>This project has received funding from the European Union's Seventh Framework
+Programme for research, technological development and demonstration under grant
+agreement no.613571.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jamie Lentin
+</p>
+<p>Maintainer: Jamie Lentin &lt;jamie.lentin@shuttlethread.com&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><a href="https://github.com/mareframe/mfdb">mfdb</a>,
+<a href="https://github.com/hafro/rgadget">rgadget</a>,
+<a href="http://www.hafro.is/gadget/userguide/userguide.html">Gadget user guide</a>
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mfdbatlantis</em> version 4.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -31,8 +31,10 @@
 <tr valign="top"><td><code>case_study_name</code></td>
 <td>
 
-<p>The name of the case study you are working with, should be a valid
-name from <code>mfdb::case_study</code>.
+<p>The name of your case study. Your Postgres database can be used to
+store any number of case studies, by storing them in separate
+<em>schemas</em>. This parameter defines the schema to connect to,
+and can contain any lower case characters or underscore.
 </p>
 </td></tr>
 <tr valign="top"><td><code>db_params</code></td>
@@ -47,9 +49,11 @@ See <code>methods?RPostgreSQL::dbConnect</code> for more information.
 <tr valign="top"><td><code>destroy_schema</code></td>
 <td>
 
-<p>Optional boolean. If true, all mfdb tables will be dropped, allowing
-you to recreate your schema. Returns NULL, you need to call <code>mfdb</code>
-to connect and rebuild schema.
+<p>Optional boolean. If true, all mfdb tables will be destroyed when
+connecting. This allows you to start populating your case study from
+scratch if required. The function will return NULL, you need to call
+<code>mfdb</code> again to connect, at which point the mfdb tables will be
+recreated and you can populate with data again.
 </p>
 </td></tr>
 <tr valign="top"><td><code>save_temp_tables</code></td>
@@ -72,7 +76,7 @@ for later inspection.
 
 <pre>## Not run: 
     # Connect to local DB, as the Iceland case study
-    mdb &lt;- mfdb('Iceland')
+    mdb &lt;- mfdb('iceland')
 
     # Connect to "mf2014" on remote DB server
     mdb &lt;- mfdb('Iceland', db_params = list(host = "db.mareframe-fp7.org", dbname = "mf2014")
@@ -81,7 +85,7 @@ for later inspection.
     mfdb_disconnect(mdb)
 
     # Destroy everything, since schema was out of date.
-    mfdb('Iceland', destroy_schema = TRUE)
+    mfdb('iceland', destroy_schema = TRUE)
 
 ## End(Not run)</pre>
 
