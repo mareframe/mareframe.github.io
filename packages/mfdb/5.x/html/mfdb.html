@@ -45,6 +45,10 @@ search for a &quot;mf&quot; database locally, but you can override any of the pa
 in particular <code>host</code>, <code>dbname</code>, <code>user</code>, <code>password</code>.
 See <code>methods?RPostgreSQL::dbConnect</code> for more information.
 </p>
+<p>As a special case, connecting to mfdb.rhi.hi.is will prompt you for a <code>user</code>
+and <code>password</code> if one isn't provided, since these are essential
+for connecting.
+</p>
 </td></tr>
 <tr valign="top"><td><code>destroy_schema</code></td>
 <td>
@@ -78,8 +82,10 @@ for later inspection.
     # Connect to local DB, as the Iceland case study
     mdb &lt;- mfdb('iceland')
 
-    # Connect to "mf2014" on remote DB server
-    mdb &lt;- mfdb('Iceland', db_params = list(host = "db.mareframe-fp7.org", dbname = "mf2014")
+    # Connect to mfdb server, get prompted for your username and password
+    mdb &lt;- mfdb('Iceland', db_params = list(host = "mfdb.rhi.hi.is"))
+    # Connect to mfdb server, get prompted for password
+    mdb &lt;- mfdb('Iceland', db_params = list(host = "mfdb.rhi.hi.is", username = "lentinj"))
 
     # Stop it and tidy up
     mfdb_disconnect(mdb)

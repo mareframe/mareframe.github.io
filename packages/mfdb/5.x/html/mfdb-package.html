@@ -152,9 +152,19 @@ measurement doesn't correlate to a specific areacell.
 for instance <code>mfdb_group(north = 1:3, south = 4:6)</code> will put anything in
 divisions 1&ndash;3 under an area named &quot;north&quot;, 4&ndash;5 under an area named &quot;south&quot;.
 </p>
-<p>areacells and divisions are defined using <a href="mfdb_import_taxonomy.html">mfdb_import_area</a>() and
-<a href="mfdb_import_taxonomy.html">mfdb_import_division</a>() respectively. Before you can upload any measurements,
-you have to define the areacells that they will use.
+<p>Before you can upload any measurements, you have to define the areacells
+that they will use. You do this using the <a href="mfdb_import_taxonomy.html">mfdb_import_area</a>() function. This
+allows you to import tables of area/division information, such as:
+</p>
+<p><code>
+mfdb_import_area(mdb, data.frame(
+    area = c('101', '102', '103', '401','402', '403'),
+    division = c('1', '1', '1', '4', '4', '4'),
+    ))
+</code>
+</p>
+<p>If you want areas to be part of multiple divisions, then you can use
+<a href="mfdb_import_taxonomy.html">mfdb_import_division</a>() to import extra revisions.
 </p>
 
 
@@ -225,6 +235,16 @@ pg_restore --clean -d mf baltic.tar
 first by issuing <code>ALTER SCHEMA baltic RENAME TO baltic_o</code> in psql. Once
 the restore is done you can rename the new schema and put the name of the old
 schema back.
+</p>
+
+
+
+<h4>Using the MFDB server</h4>
+
+<p>There is also a semi-public Postgres database available, hosted by the
+University of Iceland. This can be used from your local computer in much the
+same way as a local database, see the <a href="mfdb-server.html">mfdb-server</a> page for more
+information.
 </p>
 
 

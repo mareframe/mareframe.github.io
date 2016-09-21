@@ -60,8 +60,10 @@ values. Others however this does not make sense, so should be done separately. T
 is what these functions do.
 </p>
 <p><code>mfdb_import_division</code> is a special case, which imports groupings of areacells
-into divisions. The <code>data_in</code> should be a list of areacell vectors, with
-division names. For example, <code>list(divA = c('45G01', '45G02', '45G03'))</code>
+into divisions, if you haven't already done this with <code>mfdb_import_area</code> or your
+divisions are too complicated to represent this way. The <code>data_in</code> should be a
+list of areacell vectors, with division names. For example,
+<code>list(divA = c('45G01', '45G02', '45G03'))</code>
 </p>
 <p>Beyond this, all functions accept the following columns:
 </p>
@@ -86,6 +88,8 @@ Beyond the above, you can also provide the following:
 
 <dl>
 <dt>size</dt><dd><p>The size of the areacell</p>
+</dd>
+<dt>division</dt><dd><p>The name of the division this areacell is part of</p>
 </dd>
 </dl>
 

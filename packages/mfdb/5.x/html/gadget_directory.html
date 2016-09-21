@@ -75,7 +75,15 @@ NULL or &quot;bare_component&quot;, which implies we write &quot;something&quot;
 
 <h3>Details</h3>
 
-<p>This handles 
+<p>These functions handle reading and writing of files to a directory
+containing GADGET model files.
+</p>
+<p>First a gadget_directory object needs to be created with <code>gadget_directory</code>,
+this ensures the directory exists and stores the name of the mainfile to use.
+</p>
+<p>Any portion of a gadget model can then be written out with <code>gadget_dir_write</code>.
+You do not need to tell it which files in the model to update, since this is worked
+out based on what you are writing out.
 </p>
 
 

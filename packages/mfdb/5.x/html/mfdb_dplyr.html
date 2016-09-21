@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame DB dplyr interface</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mfdb_dplyr {mfdb}"><tr><td>mfdb_dplyr {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>MareFrame DB dplyr interface</h2>
+
+<h3>Description</h3>
+
+<p>Use mfdb tables with dplyr
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mfdb_dplyr_survey_index(mdb, include_cols = all_cols)
+mfdb_dplyr_division(mdb, include_cols = all_cols)
+mfdb_dplyr_sample(mdb, include_cols = all_cols)
+mfdb_dplyr_predator(mdb, include_cols = all_cols)
+mfdb_dplyr_prey(mdb, include_cols = all_cols)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>mdb</code></td>
+<td>
+<p>An object created by <code>mfdb</code>()</p>
+</td></tr>
+<tr valign="top"><td><code>include_cols</code></td>
+<td>
+<p>Any additonal columns to include in output, see details.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Warning: Whilst these might be handy for exploration, there is no guarantee
+that code using these will continue to work from one version of MFDB to the
+next.
+</p>
+<p>There is one function for each measurement table. By default every possible
+taxonomy column is included. However this is somewhat inefficient if you do
+not require the data, in which case specify the columns requred with
+<code>include_cols</code>. See <code>mfdb::mfdb::taxonomy</code> and
+<code>mfdb::mfdb_cs_taxonomy</code> for possible values.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A dplyr table object, for you to do as you please.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>## Not run: 
+# Include as many columns as possible
+mfdb_dplyr_sample(mdb)
+
+# Only include 'data_source' and 'species' columns, as well as measurements
+mfdb_dplyr_sample(mdb, c('data_source', 'species'))
+
+## End(Not run)</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 5.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

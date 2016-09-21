@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame DB server</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mfdb-server {mfdb}"><tr><td>mfdb-server {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>MareFrame DB server</h2>
+
+<h3>Description</h3>
+
+<p>Connecting to the remote MareFrame DB server
+</p>
+
+
+<h3>Details</h3>
+
+<p>The University of Iceland host an internet-accessible Postgres database.
+This can be used from your local computer in much the same way as a local
+database, and case studies can be imported / exported locally.
+</p>
+<p>Please send an an email to request access.
+</p>
+
+
+<h3>Connecting to the MareFrame DB server</h3>
+
+<p>Connection is done with the <a href="mfdb.html">mfdb</a> function, as with a local database.
+For example:-
+</p>
+<pre>
+mdb &lt;- mfdb('iceland', db_params = list(host = 'mfdb.rhi.hi.is'))
+</pre>
+<p>...and available case studies will be listed if <code>case_study_name</code> is not
+provided.
+</p>
+<pre>
+mdb &lt;- mfdb(db_params = list(host = 'mfdb.rhi.hi.is'))
+</pre>
+<p>When connecting to a remote database, <code>username</code> and <code>password</code> are
+essential. These could be specified in db_params, however, if not specified
+you will be prompted to enter them.
+</p>
+<p>Once connected, it can be used just like any other MFDB database.
+</p>
+
+
+<h3>Import / Export to/from MFDB server</h3>
+
+<p>As well as issuing MFDB commands on the remote database, you can (depending on
+permissions), import and export case study examples. This is useful to:
+</p>
+
+<ol>
+<li><p> Get example data to get up and running
+</p>
+</li>
+<li><p> Back up any data inserted locally
+</p>
+</li>
+<li><p> Share data with others
+</p>
+</li></ol>
+
+<p>To do this, you can use a combination of <code>pg_dump</code> and <code>pg_restore</code>
+to copy a case study (or schema, in postgresql-speak):
+</p>
+<pre>
+pg_dump --schema=example_iceland --format-c mf | pg_restore \
+    -d mf --create --clean --host=mfdb.rhi.hi.is --username=(username)
+</pre>
+<p>If you want to copy from the MFDB server to your computer, put the <code>--host</code>
+and <code>--username</code> parameters onto the <code>pg_dump</code> command.
+</p>
+
+
+<h3>Connecting directly to MFDB server</h3>
+
+<p>Finally, you can connect directly using psql if it proves useful. Note you
+shouldn't need to do this for general use.
+</p>
+<pre>
+psql "host=mfdb.rhi.hi.is user=(username) dbname=mf"
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 5.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>
