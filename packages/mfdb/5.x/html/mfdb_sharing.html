@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MareFrame DB sharing options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mfdb_sharing {mfdb}"><tr><td>mfdb_sharing {mfdb}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>MareFrame DB sharing options</h2>
+
+<h3>Description</h3>
+
+<p>Alter database privileges
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mfdb_share_with(mdb, user_or_role, query = TRUE, import = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>mdb</code></td>
+<td>
+
+<p>(required) A database connection created by <code>mfdb</code>()
+</p>
+</td></tr>
+<tr valign="top"><td><code>user_or_role</code></td>
+<td>
+
+<p>(required) Another database user, or a role, or 'public' to share with all users
+</p>
+</td></tr>
+<tr valign="top"><td><code>query</code></td>
+<td>
+
+<p>Should the user be able to query the current case study?
+</p>
+</td></tr>
+<tr valign="top"><td><code>import</code></td>
+<td>
+
+<p>Should the user be able to import more data current case study?
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This allows you to share case study data between users. This is most useful when using
+the <a href="mfdb-server.html">mfdb-server</a>. Regardless, only the owner of the schema (i.e. the user that
+created it) will be able to change table structure (i.e. upgrade MFDB versions).
+</p>
+<p>By default nothing is shared between users.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>## Not run: 
+mdb &lt;- mfdb('iceland')
+mfdb_share_with(mdb, 'paul') # Allow DB user paul to query the iceland case study data
+mfdb_share_with(mdb, 'mary') # Allow DB user mary to add data to the iceland case study
+
+## End(Not run)</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mfdb</em> version 5.0-0 <a href="00Index.html">Index</a>]</div>
+</body></html>

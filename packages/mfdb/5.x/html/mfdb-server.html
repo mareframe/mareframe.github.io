@@ -74,6 +74,16 @@ and <code>--username</code> parameters onto the <code>pg_dump</code> command.
 </p>
 
 
+<h3>Sharing case studies with other users</h3>
+
+<p>By default, only you are able to share case study data. However the <a href="mfdb_sharing.html">mfdb_share_with</a>()
+command allows you to let others read / modify your case study. For example:-
+</p>
+<pre>mfdb_share_with(mdb, 'anne')</pre>
+<p>... will allow anne to read the case study you are currently connected to.
+</p>
+
+
 <h3>Connecting directly to MFDB server</h3>
 
 <p>Finally, you can connect directly using psql if it proves useful. Note you
