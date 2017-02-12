@@ -38,7 +38,9 @@ mfdb_interval(prefix, vect, open_ended = FALSE)
 <tr valign="top"><td><code>open_ended</code></td>
 <td>
 
-<p>If true, the last group will include everything &gt;= the last value in vect
+<p>If TRUE / c('upper'), the last group will include everything &gt;= the last value in vect.
+If c('lower'), the first group will include everything &lt; the first value in vect.
+If c('upper', 'lower'), both the above occur.
 </p>
 </td></tr>
 </table>
